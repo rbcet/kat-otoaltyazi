@@ -16,6 +16,8 @@ Before installing this script I suggest you to uninstall Filebot and let the bat
 Supported Languages
 Turkish and English. 
 Except the batch file you will have only 2 strings that is foreign language. (In Context Menu)
+Of course you can select your desired language for the subtitles. Turkish and English only for Context Menu and Installation tage.
+
 
 What is the purpose?
 I don't think this script attract more attention. Like I said I made it for myself. And I think it's a very nice script for Newbies and Simple Lovers. It is doing fine for me to use Serviio,Smart TV and ServiiGo,Smart Phone and PotPlayer.
