@@ -114,7 +114,7 @@ color 73
 GOTO language
 
 :language
-set /p choice=Select Installation Language en or tr==
+set /p choice=Select Installation Language en or tr (Not Subtitle Lang!)==
 if '%choice%'=='tr' echo turkish > %TEMP%\tr.nn
 if '%choice%'=='en' echo english > %TEMP%\en.nn
 
@@ -134,8 +134,8 @@ set bulunamadi=FileBot bulunamadi,indirilecek? DEVAM ET icin 1, IPTAL icin 2 tus
 set gecerlisecim= gecerli bir secim degil.
 set infoscripti=Filebot otomatik altyazi indirme scripti
 set subatayi=Subat
-set sagindir=Altyazý indir
-set sagindirler=Altyazýlarý indir
+set sagindir=Altyazï¿½ indir
+set sagindirler=Altyazï¿½larï¿½ indir
 set simdiindir=Filebot simdi indirilecek...
 set indibasla=Indirildi. Kurulum baslatilacak...
 set bittiyse=Kurulum tamamlaninca enterlayin
