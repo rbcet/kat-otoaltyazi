@@ -39,16 +39,16 @@ GOTO ERR1
 
 	powershell %match%; 
 	if exist "%1\*.srt" (
-	msg * bulduk
+	msg * %1 icin altyazi bulundu!
 	) else (
-	msg * bulamadik
+	goto FINISH
 	)
 
 	exit
 
 	if not errorlevel 0 GOTO ERR1
 
-GOTO kontrol
+GOTO FINISH
 
 
 :ERR1
