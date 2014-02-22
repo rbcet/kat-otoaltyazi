@@ -284,7 +284,7 @@ GOTO CreateTask
 :CreateTask
 
 	ECHO Creating Folder Watch Task for %var1% >> %logfile%
-	schtasks /create /sc %scanmetric% /mo %scanunits% /tn "FileBot-Watch %var3%" /tr "%ProgramW6432%\FileBot\OtoAltyazi\takip.vbs \"\"%watchfile%\" \"%1\" \"%2\"\"
+	schtasks /create /sc %scanmetric% /mo %scanunits% /tn "FileBot-Watch %var3%" /tr "%%ProgramW6432%%\FileBot\OtoAltyazi\takip.vbs \"%1\" \"%2\"\"
 	if not errorlevel 0 GOTO ERR1
 
 	GOTO ALLOK
