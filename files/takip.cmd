@@ -31,16 +31,25 @@ GOTO ERR1
 
 
 :ScheduleMatch
-
+	set currentParameter=%1
 	set /p match=<%watchsettings%
 	call set match=%%match:PATH_HERE=%var1%%%
 	call set match=%match:~0,-1%
 
-	powershell %match%; exit
+	powershell %match%; 
+	
+   
+if exist "%currentParameter:~1,-1%\*.srt" (
+msg * test222
+) else (
+msg * test
+)
+
+	exit
 
 	if not errorlevel 0 GOTO ERR1
 
-GOTO FINISH
+GOTO kontrol
 
 
 :ERR1
