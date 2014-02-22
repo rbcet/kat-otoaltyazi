@@ -1,5 +1,4 @@
 @echo OFF
-
 :SETUP
 	set watchsettings="C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
 GOTO DetermineJobType
@@ -28,7 +27,6 @@ GOTO DetermineJobType
 	)
 
 GOTO ERR1
-
 
 :ScheduleMatch
 	set currentParameter=%1
