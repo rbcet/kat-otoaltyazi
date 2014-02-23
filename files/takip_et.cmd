@@ -1,4 +1,4 @@
-@echo OFF
+	@echo OFF
 
 :ADMIN-CHECK
 
@@ -117,6 +117,8 @@ GOTO SETUP
 	set logfile="%tmp%\filebot_watch_script_log.txt"
 	:: set watchsettings="C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
 	set watchfile="C:\Progra~1\FileBot\OtoAltyazi\takip.cmd"
+	set "watchlist=C:\Progra~1\FileBot\OtoAltyazi\gorev_listesi.txt"
+	set "watchlist2=%tmp%\gorev_listesi_tmp.txt"
 
 GOTO DetermineJobType
 
@@ -285,10 +287,7 @@ GOTO CreateTask
 
 	ECHO Creating Folder Watch Task for %var1% >> %logfile%
 	schtasks /create /sc %scanmetric% /mo %scanunits% /tn "FileBot-Watch %var3%" /tr "%%ProgramW6432%%\FileBot\OtoAltyazi\takip.vbs \"%1\" \"%2\"" /F >> %logfile%
-	echo FileBot-Watch %var3%>newFile.txt
-	type %tmp%\test1.txt>>newFile.txt
-	type newFile.txt >%tmp%\test1.txt
-	del newfile.txt
+	echo FileBot-Watch %var3%>> "%watchlist%"
 	
 	if not errorlevel 0 GOTO ERR1
 
@@ -300,6 +299,9 @@ GOTO CreateTask
 	ECHO Deleting Folder Watch for %var1% >> %logfile%
 	:: remove task for this folder
 	schtasks /delete /TN "FileBot-Watch %var3%" /f >> %logfile%
+	findstr /v /i "%var3%" "%watchlist%" > "%watchlist2%"
+	type "%watchlist2%" > "%watchlist%"
+	del "%watchlist2%"
 	ECHO Task Deleted >> %logfile%
 
 	if not errorlevel 0 GOTO ERR1

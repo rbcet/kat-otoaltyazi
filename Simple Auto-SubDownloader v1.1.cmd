@@ -114,7 +114,7 @@ color 73
 GOTO language
 
 :language
-set /p choice=Select Installation Language en or tr (Not Subtitle Lang!)==
+set /p choice=Select Installation Language en or tr==
 if '%choice%'=='tr' echo turkish > %TEMP%\tr.nn
 if '%choice%'=='en' echo english > %TEMP%\en.nn
 
@@ -134,8 +134,8 @@ set bulunamadi=FileBot bulunamadi,indirilecek? DEVAM ET icin 1, IPTAL icin 2 tus
 set gecerlisecim= gecerli bir secim degil.
 set infoscripti=Filebot otomatik altyazi indirme scripti
 set subatayi=Subat
-set sagindir=Altyazï¿½ indir
-set sagindirler=Altyazï¿½larï¿½ indir
+set sagindir=Altyazý indir
+set sagindirler=Altyazýlarý indir
 set simdiindir=Filebot simdi indirilecek...
 set indibasla=Indirildi. Kurulum baslatilacak...
 set bittiyse=Kurulum tamamlaninca enterlayin
@@ -157,6 +157,9 @@ set zatenkuru=Script zaten halihazirda kurulu!
 set kaldiracaksan=Kaldirmak istiyorsaniz, 3 tuslayin.
 set kaldiriyo= Script kaldiriliyor
 set kaldirdik= Script basariyla kaldirildi.
+set sagtakip=Klasör takibi
+set sagtakipet=Klasörü takip et
+set sagtakipbirak=Klasörün takibini býrak
 del %TEMP%\tr.nn
 goto :kontrol
 ) else (
@@ -198,6 +201,9 @@ set zatenkuru=Script is already installed.
 set kaldiracaksan=If you want to uninstall,press 3.
 set kaldiriyo= Script is being uninstalled
 set kaldirdik= Script uninstalled.
+set sagtakip=Folder Watch
+set sagtakipet=Watch the folder
+set sagtakipbirak=Remove the folder watch
 del %TEMP%\en.nn
 goto :kontrol
 )
@@ -267,18 +273,58 @@ set /p pathName=%yoluyaz%:%=%
 set /p dakiKa=%kackontrol%:%=%
 set /p altdil=%hangidil%:%=%
 
+echo @echo off >> kontrol.bat
+echo echo. 2^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
+echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" ( >> kontrol.bat
+echo goto :karsilastir >> kontrol.bat
+echo ) else ( >> kontrol.bat
+echo dir /b /s "%pathName%" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
+echo goto cik >> kontrol.bat
+echo ) >> kontrol.bat
+echo. >> kontrol.bat
+echo :karsilastir >> kontrol.bat
+echo dir /b /s "%pathName%" > C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
+echo fc /b C:\Progra~1\FileBot\OtoAltyazi\eski.txt C:\Progra~1\FileBot\OtoAltyazi\yeni.txt^|find /i "no differences"^>nul >> kontrol.bat
+echo if errorlevel 1 goto farkli >> kontrol.bat 
+echo if not errorlevel 1 goto olustur >> kontrol.bat
+echo. >> kontrol.bat
+echo :farkli >> kontrol.bat
+echo msg * Diziler klasorunuze yeni bir altyazi eklendi! >> kontrol.bat
+echo goto olustur >> kontrol.bat
+echo. >> kontrol.bat
+echo :cik >> kontrol.bat
+echo exit >> kontrol.bat 
+echo. >> kontrol.bat
+echo :olustur >> kontrol.bat
+echo dir /b /s "%pathName%" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
+echo goto cik >> kontrol.bat
+
+echo. 2> takip_ayari.txt
+echo cmd /c filebot -script fn:suball \"PATH_HERE\" -non-strict --lang %altdil% --log-file context.log --format MATCH_VIDEO >> takip_ayari.txt
+
 echo @echo off > sub.bat
 echo filebot -script fn:suball "%pathName%" -non-strict --lang %altdil% --log-file context.log --format MATCH_VIDEO >> sub.bat
+echo wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs >> sub.bat
 
 echo Set objShell = CreateObject("Shell.Application") > sub.vbs
 echo objShell.ShellExecute "C:\Program Files\FileBot\OtoAltyazi\sub.bat", "", "", "runas", 0 >> sub.vbs
 
+echo Set objShell = CreateObject("Shell.Application") > kontrol.vbs
+echo objShell.ShellExecute "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat", "", "", "runas", 0 >> kontrol.vbs
+
 echo Katates PIZARTMASI > Info.txt
 echo twitter.com/RBCetin - bit.ly/katatesp >> Info.txt
+echo Thanks to Ithiel from FileBot Forums for the -Folder Watch via Context Menu Feature- >> Info.txt
 echo %infoscripti% >> Info.txt
 echo %subatayi% 2014 >> Info.txt
 
 mkdir "C:\Program Files\FileBot\OtoAltyazi"
+
+copy kontrol.bat "C:\Program Files\FileBot\OtoAltyazi"
+
+copy takip_ayari.txt "C:\Program Files\FileBot\OtoAltyazi"
+
+copy kontrol.vbs "C:\Program Files\FileBot\OtoAltyazi"
 
 copy sub.vbs "C:\Program Files\FileBot\OtoAltyazi"
 
@@ -286,6 +332,9 @@ copy sub.bat "C:\Program Files\FileBot\OtoAltyazi"
 
 copy info.txt "C:\Program Files\FileBot\OtoAltyazi"
 
+DEL kontrol.vbs
+DEL kontrol.bat
+DEL takip_ayari.txt
 DEL sub.vbs
 DEL sub.bat
 DEL info.txt
@@ -332,13 +381,40 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\%sagindir%\Command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c  filebot.launcher -get-subtitles \"%%1\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO"
 >> "%Temp%\~import.reg" ECHO.
->> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\%sagindirler%]
+>> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\01Altyazýlarý indir]
 >> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagindirler%"
 >> "%Temp%\~import.reg" ECHO.
->> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\%sagindirler%\command]
+>> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\01Altyazýlarý indir\command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c filebot.launcher -script fn:suball \"%%1\" -non-strict --lang %altdil% --log-file context.log --format MATCH_VIDEO"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\02Takip]
+>> "%Temp%\~import.reg" ECHO "ExtendedSubCommandsKey"="Folder\\\\shell\\\\02Takip"
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagtakip%"
+>> "%Temp%\~import.reg" ECHO "icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell]
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell\1Takip Et]
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagtakipet%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell\1Takip Et\command]
+>> "%Temp%\~import.reg" ECHO @="cmd /c call \"C:\\Program Files\\FileBot\\OtoAltyazi\\takip_et.cmd\" \"%%1\" \"setmatch\""
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell\2Takibi Kaldýr]
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagtakipbirak%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell\2Takibi Kaldýr\command]
+>> "%Temp%\~import.reg" ECHO @="cmd /c call \"C:\\Program Files\\FileBot\\OtoAltyazi\\takip_et.cmd\" \"%%1\" \"removetask\""
 START /WAIT REGEDIT /S "%Temp%\~import.reg"
 DEL "%Temp%\~import.reg"
+
+wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs 
+
+bitsadmin.exe /transfer "Klasor_Takip_CMD" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.bat" "C:\Program Files\FileBot\OtoAltyazi\takip.bat"
+bitsadmin.exe /transfer "Klasor_Takip_CMD2" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip_et.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
+bitsadmin.exe /transfer "Klasor_Takip_VBS" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.vbs" "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
+
 
 ECHO %basariyla%
 
@@ -498,23 +574,55 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\%sagindir%\Command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c  filebot.launcher -get-subtitles \"%%1\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO"
 >> "%Temp%\~import.reg" ECHO.
->> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\%sagindirler%]
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\01Altyazýlarý indir]
 >> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagindirler%"
 >> "%Temp%\~import.reg" ECHO.
->> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\%sagindirler%\command]
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\01Altyazýlarý indir\command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c filebot.launcher -script fn:suball \"%%1\" -non-strict --lang %altdil% --log-file context.log --format MATCH_VIDEO"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\02Takip]
+>> "%Temp%\~import.reg" ECHO "ExtendedSubCommandsKey"="Folder\\\\shell\\\\02Takip"
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagtakip%"
+>> "%Temp%\~import.reg" ECHO "icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell]
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell\1Takip Et]
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagtakipet%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell\1Takip Et\command]
+>> "%Temp%\~import.reg" ECHO @="cmd /c call \"C:\\Program Files\\FileBot\\OtoAltyazi\\takip_et.cmd\" \"%%1\" \"setmatch\""
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell\2Takibi Kaldýr]
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagtakipbirak%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell\2Takibi Kaldýr\command]
+>> "%Temp%\~import.reg" ECHO @="cmd /c call \"C:\\Program Files\\FileBot\\OtoAltyazi\\takip_et.cmd\" \"%%1\" \"removetask\""
 START /WAIT REGEDIT /S "%Temp%\~import.reg"
 DEL "%Temp%\~import.reg"
 
 DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.vbs"
 DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.bat"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.bat"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.vbs"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat"
+ 
 RD /S /Q "C:\Program Files\FileBot\OtoAltyazi\"
 
 SCHTASKS /Delete /TN "ALTYAZI" /f
 
 echo y | wmic product where name="FileBot" call uninstall
 
+
+set "watchlist=C:\Progra~1\FileBot\OtoAltyazi\gorev_listesi.txt"
+for /f "delims=" %%a in (%watchlist%) do schtasks /delete /tn "%%a" /f 
+
 RD /S /Q "C:\Program Files\FileBot\"
+DEL /Q "%watchlist%"
 
 ECHO ) %kaldirdik%
 
