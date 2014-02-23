@@ -274,7 +274,9 @@ set /p dakiKa=%kackontrol%:%=%
 set /p altdil=%hangidil%:%=%
 
 echo @echo off >> kontrol.bat
+echo. >> kontrol.bat
 echo echo. 2^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
+echo. >> kontrol.bat
 echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" ( >> kontrol.bat
 echo goto :karsilastir >> kontrol.bat
 echo ) else ( >> kontrol.bat
@@ -283,7 +285,7 @@ echo goto cik >> kontrol.bat
 echo ) >> kontrol.bat
 echo. >> kontrol.bat
 echo :karsilastir >> kontrol.bat
-echo dir /b /s "%pathName%" > C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
+echo dir /b /s "%pathName%" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
 echo fc /b C:\Progra~1\FileBot\OtoAltyazi\eski.txt C:\Progra~1\FileBot\OtoAltyazi\yeni.txt^|find /i "no differences"^>nul >> kontrol.bat
 echo if errorlevel 1 goto farkli >> kontrol.bat 
 echo if not errorlevel 1 goto olustur >> kontrol.bat
