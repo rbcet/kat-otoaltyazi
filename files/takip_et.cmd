@@ -159,7 +159,7 @@ GOTO ERR1
 
 	:ask-metric
 
-		call :inputbox "Please enter 1 to schedule in minutes, 2 to schedule in hours, 3 to schedule in days, 4 to schedule in weeks, or 5 to schedule in months" "What Are We Counting In?" "2"
+		call :inputbox "Dakika olarak izleyecekseniz 1, saat olarak izleyecekseniz 2, gun icin 3, hafta icin 4, ay icin 5" "Hangi araliklarla izleyecegiz?" "2"
 
 		if NOT "%Input%"=="" (
 			GOTO metric-check
@@ -216,7 +216,7 @@ GOTO ERR1
 
 	:ask-units
 
-		call :inputbox "Schedule scan every how many %metricterm%? (%termlimits%)" "How many %metricterm%?" "1"
+		call :inputbox "%metricterm%? (%termlimits%)" "%metricterm%?" "1"
 
 		if NOT "%Input%"=="" (
 			GOTO units-check
@@ -286,8 +286,8 @@ GOTO CreateTask
 :CreateTask
 
 	ECHO Creating Folder Watch Task for %var1% >> %logfile%
-	schtasks /create /sc %scanmetric% /mo %scanunits% /tn "FileBot-Watch %var3%" /tr "%%ProgramW6432%%\FileBot\OtoAltyazi\takip.vbs \"%1\" \"%2\"" /F >> %logfile%
-	echo FileBot-Watch %var3%>> "%watchlist%"
+	schtasks /create /sc %scanmetric% /mo %scanunits% /tn "Takip %var3%" /tr "%%ProgramW6432%%\FileBot\OtoAltyazi\takip.vbs \"%1\" \"%2\"" /F >> %logfile%
+	echo Takip %var3%>> "%watchlist%"
 	
 	if not errorlevel 0 GOTO ERR1
 
@@ -298,7 +298,7 @@ GOTO CreateTask
 
 	ECHO Deleting Folder Watch for %var1% >> %logfile%
 	:: remove task for this folder
-	schtasks /delete /TN "FileBot-Watch %var3%" /f >> %logfile%
+	schtasks /delete /TN "Takip %var3%" /f >> %logfile%
 	findstr /v /i "%var3%" "%watchlist%" > "%watchlist2%"
 	type "%watchlist2%" > "%watchlist%"
 	del "%watchlist2%"
