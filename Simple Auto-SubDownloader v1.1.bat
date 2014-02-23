@@ -115,7 +115,7 @@ GOTO CALL-SETUP
 :CALL-SETUP
 
 
-	bitsadmin.exe /transfer "Download_Install" /priority foreground "https://github.com/katates/otoaltyazi/raw/master/otoaltyazi.cmd" "%tmp%\otoaltyazi.cmd"
+	bitsadmin.exe /transfer "Download_Install" /priority foreground "https://github.com/katates/otoaltyazi/raw/master/files/otoaltyazi.cmd" "%tmp%\otoaltyazi.cmd"
 
 	call "%tmp%\otoaltyazi.cmd"
 	del "%tmp%\otoaltyazi.cmd"
