@@ -282,12 +282,12 @@ echo. >> kontrol.bat
 echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" ( >> kontrol.bat
 echo goto :karsilastir >> kontrol.bat
 echo ) else ( >> kontrol.bat
-echo dir /b /s "%pathName%" | findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
+echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
 echo goto cik >> kontrol.bat
 echo ) >> kontrol.bat
 echo. >> kontrol.bat
 echo :karsilastir >> kontrol.bat
-echo dir /b /s "%pathName%" | findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
+echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
 echo fc /b C:\Progra~1\FileBot\OtoAltyazi\eski.txt C:\Progra~1\FileBot\OtoAltyazi\yeni.txt^|find /i "no differences"^>nul >> kontrol.bat
 echo if errorlevel 1 goto farkli >> kontrol.bat 
 echo if not errorlevel 1 goto olustur >> kontrol.bat
@@ -300,7 +300,7 @@ echo :cik >> kontrol.bat
 echo exit >> kontrol.bat 
 echo. >> kontrol.bat
 echo :olustur >> kontrol.bat
-echo dir /b /s "%pathName%" | findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
+echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
 echo goto cik >> kontrol.bat
 
 echo. 2> takip_ayari.txt
