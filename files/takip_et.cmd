@@ -302,6 +302,9 @@ GOTO CreateTask
 	findstr /v /i "%var3%" "%watchlist%" > "%watchlist2%"
 	type "%watchlist2%" > "%watchlist%"
 	del "%watchlist2%"
+	DEL /Q /a:H "%var1%\eski.txt"
+	DEL /Q /a:H "%var1%\yeni.txt"
+
 	ECHO Task Deleted >> %logfile%
 
 	if not errorlevel 0 GOTO ERR1
