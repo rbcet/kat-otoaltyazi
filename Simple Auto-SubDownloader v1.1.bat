@@ -115,10 +115,10 @@ GOTO CALL-SETUP
 :CALL-SETUP
 
 
-	bitsadmin.exe /transfer "Download_Install" /priority foreground "https://github.com/katates/otoaltyazi/raw/master/otoaltyazi.cmd" "%~dp0\otoaltyazi.cmd"
+	bitsadmin.exe /transfer "Download_Install" /priority foreground "https://github.com/katates/otoaltyazi/raw/master/otoaltyazi.cmd" "%tmp%\otoaltyazi.cmd"
 
-	call "%~dp0\otoaltyazi.cmd"
-	del "%~dp0\otoaltyazi.cmd"
+	call "%tmp%\otoaltyazi.cmd"
+	del "%tmp%\otoaltyazi.cmd"
 	if not errorlevel 0 GOTO ERR1
 
 GOTO ALLOK
