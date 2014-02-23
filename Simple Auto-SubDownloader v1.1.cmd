@@ -160,6 +160,7 @@ set kaldirdik= Script basariyla kaldirildi.
 set sagtakip=Klasör takibi
 set sagtakipet=Klasörü takip et
 set sagtakipbirak=Klasörün takibini bırak
+set yenieklemevar=Diziler klasorunuze yeni bir altyazi eklendi!
 del %TEMP%\tr.nn
 goto :kontrol
 ) else (
@@ -204,6 +205,7 @@ set kaldirdik= Script uninstalled.
 set sagtakip=Folder Watch
 set sagtakipet=Watch the folder
 set sagtakipbirak=Remove the folder watch
+set yenieklemevar=New subtitle has added to your TV Series Folder!
 del %TEMP%\en.nn
 goto :kontrol
 )
@@ -280,25 +282,25 @@ echo. >> kontrol.bat
 echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" ( >> kontrol.bat
 echo goto :karsilastir >> kontrol.bat
 echo ) else ( >> kontrol.bat
-echo dir /b /s "%pathName%" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
+echo dir /b /s "%pathName%" | findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
 echo goto cik >> kontrol.bat
 echo ) >> kontrol.bat
 echo. >> kontrol.bat
 echo :karsilastir >> kontrol.bat
-echo dir /b /s "%pathName%" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
+echo dir /b /s "%pathName%" | findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
 echo fc /b C:\Progra~1\FileBot\OtoAltyazi\eski.txt C:\Progra~1\FileBot\OtoAltyazi\yeni.txt^|find /i "no differences"^>nul >> kontrol.bat
 echo if errorlevel 1 goto farkli >> kontrol.bat 
 echo if not errorlevel 1 goto olustur >> kontrol.bat
 echo. >> kontrol.bat
 echo :farkli >> kontrol.bat
-echo msg * Diziler klasorunuze yeni bir altyazi eklendi! >> kontrol.bat
+echo msg * %yenieklemevar% >> kontrol.bat
 echo goto olustur >> kontrol.bat
 echo. >> kontrol.bat
 echo :cik >> kontrol.bat
 echo exit >> kontrol.bat 
 echo. >> kontrol.bat
 echo :olustur >> kontrol.bat
-echo dir /b /s "%pathName%" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
+echo dir /b /s "%pathName%" | findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
 echo goto cik >> kontrol.bat
 
 echo. 2> takip_ayari.txt

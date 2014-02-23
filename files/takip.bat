@@ -29,20 +29,33 @@ GOTO DetermineJobType
 GOTO ERR1
 
 :ScheduleMatch
-	set currentParameter=%1
-	
+
+echo. 2> %1\yeni.txt 
+dir /b /s "%1" | findstr /m /i "\.srt$" > %1\eski.txt 
+
+	set currentParameter=%1	
 	set /p match=<%watchsettings%
 	call set match=%%match:PATH_HERE=%var1%%%
 	call set match=%match:~0,-1%
-
 	powershell %match%; 
-	if exist "%1\*.srt" (
-	msg * %1 icin altyazi bulundu!
-	) else (
-	goto FINISH
-	)
+	
+dir /b /s "%1" | findstr /m /i "\.srt$"  > %1\yeni.txt 
+fc /b %1\eski.txt %1\yeni.txt|find /i "no differences">nul 
+if errorlevel 1 goto farkli  
+if not errorlevel 1 goto olustur 
 
-	exit
+:farkli 
+msg * %1 e yeni bir altyazi eklendi! 
+goto olustur 
+
+:olustur 
+dir /b /s "%1" | findstr /m /i "\.srt$"  > %1\eski.txt 
+goto cik 
+
+:cik 
+ATTRIB +H %1/eski.txt
+ATTRIB +H %1/yeni.txt
+exit 
 
 	if not errorlevel 0 GOTO ERR1
 
