@@ -275,39 +275,43 @@ set /p pathName=%yoluyaz%:%=%
 set /p dakiKa=%kackontrol%:%=%
 set /p altdil=%hangidil%:%=%
 
-echo @echo off >> kontrol.bat
+echo @echo off  >> kontrol.bat
 echo. >> kontrol.bat
 echo echo. 2^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
-echo. >> kontrol.bat
-echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" ( >> kontrol.bat
-echo goto :karsilastir >> kontrol.bat
-echo ) else ( >> kontrol.bat
-echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
-echo goto cik >> kontrol.bat
-echo ) >> kontrol.bat
+echo. >> kontrol.bat 
+echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" (  >> kontrol.bat
+echo goto :karsilastir  >> kontrol.bat
+echo ) else (  >> kontrol.bat
+echo dir /b /s "%pathName%"  ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt  >> kontrol.bat
+echo goto cik  >> kontrol.bat
+echo )  >> kontrol.bat
 echo. >> kontrol.bat
 echo :karsilastir >> kontrol.bat
-echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
+echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt  >> kontrol.bat
 echo fc /b C:\Progra~1\FileBot\OtoAltyazi\eski.txt C:\Progra~1\FileBot\OtoAltyazi\yeni.txt^|find /i "no differences"^>nul >> kontrol.bat
-echo if errorlevel 1 goto farkli >> kontrol.bat 
+echo if errorlevel 1 goto farkli  >> kontrol.bat
 echo if not errorlevel 1 goto olustur >> kontrol.bat
-echo. >> kontrol.bat
-echo :farkli >> kontrol.bat
-echo msg * %yenieklemevar% >> kontrol.bat
+echo. >> kontrol.bat 
+echo :farkli  >> kontrol.bat
+echo set dosya1="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> kontrol.bat
+echo set dosya2="C:\Progra~1\FileBot\OtoAltyazi\yeni.txt" >> kontrol.bat
+echo findstr /G:%%dosya1%% /I /L /B /V %%dosya2%% ^> eklendi.txt >> kontrol.bat
+echo msg * /w ^< eklendi.txt >> kontrol.bat
 echo goto olustur >> kontrol.bat
-echo. >> kontrol.bat
-echo :cik >> kontrol.bat
-echo exit >> kontrol.bat 
 echo. >> kontrol.bat
 echo :olustur >> kontrol.bat
 echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
-echo goto cik >> kontrol.bat
+echo goto cik  >> kontrol.bat
+echo. >> kontrol.bat
+echo :cik >> kontrol.bat
+echo exit >> kontrol.bat
 
 echo. 2> takip_ayari.txt
-echo cmd /c filebot -script fn:suball \"PATH_HERE\" -non-strict --lang %altdil% --log-file context.log --format MATCH_VIDEO >> takip_ayari.txt
+echo cmd /c filebot -script fn:suball \"PATH_HERE\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO >> takip_ayari.txt
 
 echo @echo off > sub.bat
-echo filebot -script fn:suball "%pathName%" -non-strict --lang %altdil% --log-file context.log --format MATCH_VIDEO >> sub.bat
+echo wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs >> sub.bat
+echo filebot -script fn:suball "%pathName%" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO >> sub.bat
 echo wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs >> sub.bat
 
 echo Set objShell = CreateObject("Shell.Application") > sub.vbs
@@ -318,7 +322,7 @@ echo objShell.ShellExecute "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat", ""
 
 echo Katates PIZARTMASI > Info.txt
 echo twitter.com/RBCetin - bit.ly/katatesp >> Info.txt
-echo Thanks to Ithiel from FileBot Forums for the -Folder Watch via Context Menu Feature- >> Info.txt
+echo Thanks to Ithiel for the -Folder Watch via Context Menu Feature- >> Info.txt
 echo %infoscripti% >> Info.txt
 echo %subatayi% 2014 >> Info.txt
 
