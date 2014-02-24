@@ -610,16 +610,6 @@ If exist "%Temp%\~import.reg" (
 START /WAIT REGEDIT /S "%Temp%\~import.reg"
 DEL "%Temp%\~import.reg"
 
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.vbs"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.bat"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.bat"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.vbs"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat"
- 
-RD /S /Q "C:\Program Files\FileBot\OtoAltyazi\"
 
 SCHTASKS /Delete /TN "ALTYAZI" /f
 
@@ -631,6 +621,16 @@ for /f "delims=" %%a in (%watchlist%) do schtasks /delete /tn "%%a" /f
 
 RD /S /Q "C:\Program Files\FileBot\"
 DEL /Q "%watchlist%"
+
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.vbs"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.bat"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.bat"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.vbs"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat"
+RD /S /Q "C:\Program Files\FileBot\OtoAltyazi\"
 
 ECHO ) %kaldirdik%
 
