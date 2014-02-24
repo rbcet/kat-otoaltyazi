@@ -133,8 +133,29 @@ GOTO DetermineJobType
 	set var2=%2
 	set var2=%var2:"=%
 
-	set var3=%var1:\=-%
+	set var3=%var1:\\=%
+	set var3=%var3:_=%
+	set var3=%var3:\=_%
 	set var3=%var3::=%
+	set var3=%var3: =%
+	set var3=%var3:(=%
+	set var3=%var3:)=%
+	set var3=%var3:;=%
+	set var3=%var3:'=%
+	set var3=%var3:.=%
+	set var3=%var3:,=%
+	set var3=%var3:-=%
+	set var3=%var3:+=%
+	set var3=%var3:{=%
+	set var3=%var3:}=%
+	set var3=%var3:[=%
+	set var3=%var3:]=%
+	set var3=%var3:!=%
+	set var3=%var3:@=%
+	set var3=%var3:#=%
+	set var3=%var3:$=%
+	set var3=%var3:^=%
+	set var3=%var3:&=%
 
 	if "%var2%"=="setnonmatch" (
 		goto AskDetails
