@@ -157,7 +157,7 @@ GOTO DetermineJobType
 	set var3=%var3:^=%
 	set var3=%var3:&=%
 
-	if "%var2%"=="setnonmatch" (
+	if "%var2%"=="setmatch" (
 		goto AskDetails
 	) ELSE ( 
 		if "%var2%"=="setmatch" (
@@ -325,6 +325,7 @@ GOTO CreateTask
 	del "%watchlist2%"
 	DEL /Q /a:H "%var1%\eski.txt"
 	DEL /Q /a:H "%var1%\yeni.txt"
+	DEL /Q /a:H "%var1%\eklendi.txt"
 
 	ECHO Task Deleted >> %logfile%
 

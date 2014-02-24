@@ -1,6 +1,6 @@
-@echo OFF
+	@echo OFF
 :SETUP
-	set watchsettings="C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
+set watchsettings="C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
 GOTO DetermineJobType
 
 :DetermineJobType
@@ -12,11 +12,32 @@ GOTO DetermineJobType
 	set var2=%2
 	set var2=%var2:"=%
 
-	set var3=%var1:\=-%
+	set var3=%var1:\\=%
+	set var3=%var3:_=%
+	set var3=%var3:\=_%
 	set var3=%var3::=%
+	set var3=%var3: =%
+	set var3=%var3:(=%
+	set var3=%var3:)=%
+	set var3=%var3:;=%
+	set var3=%var3:'=%
+	set var3=%var3:.=%
+	set var3=%var3:,=%
+	set var3=%var3:-=%
+	set var3=%var3:+=%
+	set var3=%var3:{=%
+	set var3=%var3:}=%
+	set var3=%var3:[=%
+	set var3=%var3:]=%
+	set var3=%var3:!=%
+	set var3=%var3:@=%
+	set var3=%var3:#=%
+	set var3=%var3:$=%
+	set var3=%var3:^=%
+	set var3=%var3:&=%
 
-	if "%var2%"=="setnonmatch" (
-		goto ScheduleNonMatch
+	if "%var2%"=="setmatch" (
+		goto ScheduleMatch
 	) ELSE ( 
 		if "%var2%"=="setmatch" (
 			goto ScheduleMatch
@@ -45,17 +66,19 @@ if errorlevel 1 goto farkli
 if not errorlevel 1 goto olustur 
 
 :farkli 
-msg * %1 e yeni bir altyazi eklendi! 
+set dosya1="%1\eski.txt" 
+set dosya2="%1\yeni.txt" 
+findstr /G:%dosya1% /I /L /B /V %dosya2% > %1\eklendi.txt 
+msg * /w < %1\eklendi.txt 
 goto olustur 
 
 :olustur 
 dir /b /s "%1" | findstr /m /i "\.srt$"  > %1\eski.txt 
-goto cik 
-
-:cik 
+ATTRIB +H %1/eklendi.txt
 ATTRIB +H %1/eski.txt
 ATTRIB +H %1/yeni.txt
 exit 
+
 
 	if not errorlevel 0 GOTO ERR1
 
