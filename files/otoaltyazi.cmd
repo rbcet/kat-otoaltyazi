@@ -419,7 +419,7 @@ DEL "%Temp%\~import.reg"
 
 wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs 
 
-bitsadmin.exe /transfer "Klasor_Takip_CMD" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.bat" "C:\Program Files\FileBot\OtoAltyazi\takip.bat"
+bitsadmin.exe /transfer "Klasor_Takip_CMD" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip.bat"
 bitsadmin.exe /transfer "Klasor_Takip_CMD2" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip_et.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
 bitsadmin.exe /transfer "Klasor_Takip_VBS" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.vbs" "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
 
