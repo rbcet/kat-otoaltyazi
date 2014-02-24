@@ -419,7 +419,7 @@ DEL "%Temp%\~import.reg"
 
 wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs 
 
-bitsadmin.exe /transfer "Klasor_Takip_CMD" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip.bat"
+bitsadmin.exe /transfer "Klasor_Takip_CMD" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip.cmd"
 bitsadmin.exe /transfer "Klasor_Takip_CMD2" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip_et.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
 bitsadmin.exe /transfer "Klasor_Takip_VBS" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.vbs" "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
 
@@ -623,7 +623,7 @@ DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.vbs"
 DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.bat"
 DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
 DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.bat"
+DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.cmd"
 DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
 DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.vbs"
 DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat"
