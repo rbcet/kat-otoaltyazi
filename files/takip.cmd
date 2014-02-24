@@ -35,6 +35,9 @@ GOTO ERR1
 
 :ScheduleMatch
 	set currentParameter=%1	
+ATTRIB -H %1\eski.txt 
+ATTRIB -H %1\yeni.txt
+ATTRIB -H %1\eklendi.txt
 	echo. 2> %1\yeni.txt 
 	dir /b /s "%1" | findstr /m /i "\.srt$" > %1\eski.txt 
 	for /f "tokens=*" %%i in ('findstr MATCH_VIDEO %watchsettings%') do set match=%%i
@@ -56,6 +59,9 @@ goto olustur
 
 :olustur 
 dir /b /s "%1" | findstr /m /i "\.srt$"  > %1\eski.txt 
+ATTRIB +H %1\eski.txt 
+ATTRIB +H %1\yeni.txt
+ATTRIB +H %1\eklendi.txt
 
 exit
 
