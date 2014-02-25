@@ -309,7 +309,7 @@ echo :cik >> kontrol.bat
 echo exit >> kontrol.bat
 
 echo Option Explicit>> eklendi.vbs
-echo Const conForReading ^= 1>> eklendi.vbs
+echo Const conForReading = ^1>> eklendi.vbs
 echo Dim objFSO, objReadFile, objFile, contents>> eklendi.vbs
 echo Set objFSO = CreateObject("Scripting.FileSystemObject")>> eklendi.vbs
 echo Set objFile = objFSO.GetFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt") >> eklendi.vbs
