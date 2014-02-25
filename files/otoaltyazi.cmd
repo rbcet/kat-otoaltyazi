@@ -289,8 +289,6 @@ echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" (  >> kontrol.bat
 echo goto :karsilastir  >> kontrol.bat
 echo ) else (  >> kontrol.bat
 echo dir /b /s "%pathName%"  ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt  >> kontrol.bat
-echo set filemask="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> kontrol.bat
-echo for %%A in (%%filemask%%) do if %%~zA==0 echo . ^>^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
 echo goto cik  >> kontrol.bat
 echo )  >> kontrol.bat
 echo. >> kontrol.bat
