@@ -161,6 +161,7 @@ set sagtakip=Klasör takibi
 set sagtakipet=Klasörü takip et
 set sagtakipbirak=Klasörün takibini býrak
 set yenieklemevar=Diziler klasorunuze yeni bir altyazi eklendi!
+set eklendibaslik=Eklenen Altyazýlar
 del %TEMP%\tr.nn
 goto :kontrol
 ) else (
@@ -206,6 +207,7 @@ set sagtakip=Folder Watch
 set sagtakipet=Watch the folder
 set sagtakipbirak=Remove the folder watch
 set yenieklemevar=New subtitle has added to your TV Series Folder!
+set eklendibaslik=Added Subtitles
 del %TEMP%\en.nn
 goto :kontrol
 )
@@ -295,8 +297,8 @@ echo. >> kontrol.bat
 echo :farkli  >> kontrol.bat
 echo set dosya1="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> kontrol.bat
 echo set dosya2="C:\Progra~1\FileBot\OtoAltyazi\yeni.txt" >> kontrol.bat
-echo findstr /G:%%dosya1%% /I /L /B /V %%dosya2%% ^> eklendi.txt >> kontrol.bat
-echo msg * /w ^< eklendi.txt >> kontrol.bat
+echo findstr /G:%%dosya1%% /I /L /B /V %%dosya2%% ^> C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt >> kontrol.bat
+echo wscript C:\Progra~1\FileBot\OtoAltyazi\eklendi.vbs >> kontrol.bat
 echo goto olustur >> kontrol.bat
 echo. >> kontrol.bat
 echo :olustur >> kontrol.bat
@@ -305,6 +307,25 @@ echo goto cik  >> kontrol.bat
 echo. >> kontrol.bat
 echo :cik >> kontrol.bat
 echo exit >> kontrol.bat
+
+echo Option Explicit>> eklendi.vbs
+echo Const conForReading ^= 1>> eklendi.vbs
+echo Dim objFSO, objReadFile, objFile, contents>> eklendi.vbs
+echo Set objFSO = CreateObject("Scripting.FileSystemObject")>> eklendi.vbs
+echo Set objFile = objFSO.GetFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt") >> eklendi.vbs
+echo. >> eklendi.vbs
+echo If objFile.Size > 0 Then >> eklendi.vbs
+echo Set objReadFile = objFSO.OpenTextFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt", 1, False)>> eklendi.vbs
+echo contents = objReadFile.ReadAll>> eklendi.vbs
+echo MsgBox "" ^& contents ^& "",vbOKOnly+vbExclamation,"%eklendibaslik%">> eklendi.vbs
+echo objReadFile.close>> eklendi.vbs
+echo. >> eklendi.vbs
+echo Else >> eklendi.vbs
+echo End If  >> eklendi.vbs
+echo. >> eklendi.vbs 
+echo Set objFSO = Nothing >> eklendi.vbs
+echo Set objReadFile = Nothing >> eklendi.vbs
+echo WScript.Quit() >> eklendi.vbs
 
 echo. 2> takip_ayari.txt
 echo cmd /c filebot -script fn:suball \"PATH_HERE\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO >> takip_ayari.txt
@@ -338,8 +359,11 @@ copy sub.vbs "C:\Program Files\FileBot\OtoAltyazi"
 
 copy sub.bat "C:\Program Files\FileBot\OtoAltyazi"
 
+copy eklendi.vbs "C:\Program Files\FileBot\OtoAltyazi"
+
 copy info.txt "C:\Program Files\FileBot\OtoAltyazi"
 
+DEL eklendi.vbs
 DEL kontrol.vbs
 DEL kontrol.bat
 DEL takip_ayari.txt
@@ -618,15 +642,6 @@ echo y | wmic product where name="FileBot" call uninstall
 set "watchlist=C:\Progra~1\FileBot\OtoAltyazi\gorev_listesi.txt"
 for /f "delims=" %%a in (%watchlist%) do schtasks /delete /tn "%%a" /f 
 
-
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.vbs"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\sub.bat"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip.cmd"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.vbs"
-DEL /Q "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat"
 DEL /Q "%watchlist%"
 RD /S /Q "C:\Program Files\FileBot\OtoAltyazi\"
 RD /S /Q "C:\Program Files\FileBot\"
