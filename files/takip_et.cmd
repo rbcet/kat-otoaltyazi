@@ -180,7 +180,7 @@ GOTO ERR1
 
 	:ask-metric
 
-		call :inputbox "Dakika olarak izleyecekseniz 1, saat olarak izleyecekseniz 2, gun icin 3, hafta icin 4, ay icin 5" "Hangi araliklarla izleyecegiz?" "2"
+		call :inputbox "Input for, dakika-minutes 1,saat-hour 2,gun-day 3,hafta-week icin 4,ay-month 5, girin." "Hangi araliklarla (interval metric)?" "2"
 
 		if NOT "%Input%"=="" (
 			GOTO metric-check
