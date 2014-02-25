@@ -35,16 +35,49 @@ GOTO ERR1
 
 :ScheduleMatch
 	set currentParameter=%1	
+	set he=Evet, klasore git -
+	set yok= Yes, open folder
+	set eklendibaslik=EKLENEN ALTYAZILAR - ADDED SUBTITLES
 ATTRIB -H %1\eski.txt 
 ATTRIB -H %1\yeni.txt
 ATTRIB -H %1\eklendi.txt
+
+echo Option Explicit>> %1\eklendi.vbs
+echo Const conForReading = ^1>> %1\eklendi.vbs
+echo Dim objFSO, objReadFile, objFile, contents, result, shell>> %1\eklendi.vbs
+echo Set objFSO = CreateObject("Scripting.FileSystemObject")>> %1\eklendi.vbs
+echo Set objFile = objFSO.GetFile("%1\eklendi.txt") >> %1\eklendi.vbs
+echo. >> %1\eklendi.vbs
+echo If objFile.Size > 0 Then >> %1\eklendi.vbs
+echo Set objReadFile = objFSO.OpenTextFile("%1\eklendi.txt", 1, False)>> %1\eklendi.vbs
+echo contents = objReadFile.ReadAll>> %1\eklendi.vbs
+echo result = MsgBox ("" ^& contents ^& "%he% %yok%",vbYesNo+vbExclamation,"%eklendibaslik%")>> %1\eklendi.vbs
+echo Select Case result>> %1\eklendi.vbs
+echo Case vbYes>>  %1\eklendi.vbs
+echo Set shell = wscript.CreateObject("Shell.Application")>> %1\eklendi.vbs
+echo shell.Open "%1">> %1\eklendi.vbs
+echo Case vbNo>> %1\eklendi.vbs
+echo End Select>> %1\eklendi.vbs
+echo objReadFile.close>> %1\eklendi.vbs
+echo. >> %1\eklendi.vbs
+echo Else >> %1\eklendi.vbs
+echo End If  >> %1\eklendi.vbs
+echo. >> %1\eklendi.vbs 
+echo Set objFSO = Nothing >> %1\eklendi.vbs
+echo Set objReadFile = Nothing >> %1\eklendi.vbs
+echo WScript.Quit() >> %1\eklendi.vbs
+
 	echo. 2> %1\yeni.txt 
 	dir /b /s "%1" | findstr /m /i "\.srt$" > %1\eski.txt 
+	set filemask="%1\eski.txt"
+	for %%A in (%filemask%) do if %%~zA==0 echo . >> %1\eski.txt
+	
 	for /f "tokens=*" %%i in ('findstr MATCH_VIDEO %watchsettings%') do set match=%%i
 	call set match=%%match:PATH_HERE=%var1%%%
 	call set match=%match:~0,-1%
 
 	powershell %match%;
+	
 dir /b /s "%1" | findstr /m /i "\.srt$"  > %1\yeni.txt 
 fc /b %1\eski.txt %1\yeni.txt|find /i "no differences">nul 
 if errorlevel 1 goto farkli  
@@ -54,7 +87,8 @@ if not errorlevel 1 goto olustur
 set dosya1="%1\eski.txt" 
 set dosya2="%1\yeni.txt" 
 findstr /G:%dosya1% /I /L /B /V %dosya2% > %1\eklendi.txt 
-msg * /w < %1\eklendi.txt 
+wscript %1\eklendi.vbs
+
 goto olustur 
 
 :olustur 
@@ -62,7 +96,7 @@ dir /b /s "%1" | findstr /m /i "\.srt$"  > %1\eski.txt
 ATTRIB +H %1\eski.txt 
 ATTRIB +H %1\yeni.txt
 ATTRIB +H %1\eklendi.txt
-
+del "%1\eklendi.vbs"
 exit
 
 	if not errorlevel 0 GOTO ERR1

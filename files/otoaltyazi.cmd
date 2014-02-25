@@ -162,6 +162,8 @@ set sagtakipet=Klasörü takip et
 set sagtakipbirak=Klasörün takibini býrak
 set yenieklemevar=Diziler klasorunuze yeni bir altyazi eklendi!
 set eklendibaslik=Eklenen Altyazýlar
+set he=Evet, Klasöre git
+set yok=Hayýr, Pencereyi kapat
 del %TEMP%\tr.nn
 goto :kontrol
 ) else (
@@ -208,6 +210,8 @@ set sagtakipet=Watch the folder
 set sagtakipbirak=Remove the folder watch
 set yenieklemevar=New subtitle has added to your TV Series Folder!
 set eklendibaslik=Added Subtitles
+set he=Yes, Go to folder
+set yok=No, Close the window
 del %TEMP%\en.nn
 goto :kontrol
 )
@@ -285,6 +289,8 @@ echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" (  >> kontrol.bat
 echo goto :karsilastir  >> kontrol.bat
 echo ) else (  >> kontrol.bat
 echo dir /b /s "%pathName%"  ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt  >> kontrol.bat
+echo set filemask="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> kontrol.bat
+echo for %%A in (%%filemask%%) do if %%~zA==0 echo . ^>^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
 echo goto cik  >> kontrol.bat
 echo )  >> kontrol.bat
 echo. >> kontrol.bat
@@ -310,14 +316,20 @@ echo exit >> kontrol.bat
 
 echo Option Explicit>> eklendi.vbs
 echo Const conForReading = ^1>> eklendi.vbs
-echo Dim objFSO, objReadFile, objFile, contents>> eklendi.vbs
+echo Dim objFSO, objReadFile, objFile, contents, result, shell>> eklendi.vbs
 echo Set objFSO = CreateObject("Scripting.FileSystemObject")>> eklendi.vbs
 echo Set objFile = objFSO.GetFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt") >> eklendi.vbs
 echo. >> eklendi.vbs
 echo If objFile.Size > 0 Then >> eklendi.vbs
 echo Set objReadFile = objFSO.OpenTextFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt", 1, False)>> eklendi.vbs
 echo contents = objReadFile.ReadAll>> eklendi.vbs
-echo MsgBox "" ^& contents ^& "",vbOKOnly+vbExclamation,"%eklendibaslik%">> eklendi.vbs
+echo result = MsgBox ("" ^& contents ^& "%he% %yok%",vbYesNo+vbExclamation,"%eklendibaslik%")>> eklendi.vbs
+echo Select Case result>> eklendi.vbs
+echo Case vbYes>> eklendi.vbs
+echo Set shell = wscript.CreateObject("Shell.Application")>> eklendi.vbs
+echo shell.Open "%pathName%">> eklendi.vbs
+echo Case vbNo>> eklendi.vbs
+echo End Select>> eklendi.vbs
 echo objReadFile.close>> eklendi.vbs
 echo. >> eklendi.vbs
 echo Else >> eklendi.vbs
@@ -343,24 +355,17 @@ echo objShell.ShellExecute "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat", ""
 
 echo Katates PIZARTMASI > Info.txt
 echo twitter.com/RBCetin - bit.ly/katatesp >> Info.txt
-echo Thanks to Ithiel for the -Folder Watch via Context Menu Feature- >> Info.txt
+echo Thanks to Ithiel (CapriciousSage) >> Info.txt
 echo %infoscripti% >> Info.txt
 echo %subatayi% 2014 >> Info.txt
 
 mkdir "C:\Program Files\FileBot\OtoAltyazi"
-
 copy kontrol.bat "C:\Program Files\FileBot\OtoAltyazi"
-
 copy takip_ayari.txt "C:\Program Files\FileBot\OtoAltyazi"
-
 copy kontrol.vbs "C:\Program Files\FileBot\OtoAltyazi"
-
 copy sub.vbs "C:\Program Files\FileBot\OtoAltyazi"
-
 copy sub.bat "C:\Program Files\FileBot\OtoAltyazi"
-
 copy eklendi.vbs "C:\Program Files\FileBot\OtoAltyazi"
-
 copy info.txt "C:\Program Files\FileBot\OtoAltyazi"
 
 DEL eklendi.vbs
@@ -450,7 +455,6 @@ bitsadmin.exe /transfer "Klasor_Takip_VBS" /priority foreground  "https://github
 
 ECHO %basariyla%
 
-pause 
 goto end
 
 :YOK
