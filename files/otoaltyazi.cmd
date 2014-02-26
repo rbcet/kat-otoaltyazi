@@ -318,7 +318,7 @@ echo Dim objFSO, objReadFile, objFile, contents, result, shell>> eklendi.vbs
 echo Set objFSO = CreateObject("Scripting.FileSystemObject")>> eklendi.vbs
 echo Set objFile = objFSO.GetFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt") >> eklendi.vbs
 echo. >> eklendi.vbs
-echo If objFile.Size > 0 Then >> eklendi.vbs
+echo If objFile.Size ^> 0 Then >> eklendi.vbs
 echo Set objReadFile = objFSO.OpenTextFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt", 1, False)>> eklendi.vbs
 echo contents = objReadFile.ReadAll>> eklendi.vbs
 echo result = MsgBox ("" ^& contents ^& "%he% %yok%",vbYesNo+vbExclamation,"%eklendibaslik%")>> eklendi.vbs
