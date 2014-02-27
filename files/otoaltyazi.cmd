@@ -161,9 +161,8 @@ set sagtakip=Klasör takibi
 set sagtakipet=Klasörü takip et
 set sagtakipbirak=Klasörün takibini býrak
 set yenieklemevar=Diziler klasorunuze yeni bir altyazi eklendi!
-set eklendibaslik=Eklenen Altyazýlar
-set he=Evet, Klasöre git
-set yok=Hayýr, Pencereyi kapat
+set eklendibaslik=Klasöre git?
+set he=Eklenen altyazýlar;
 del %TEMP%\tr.nn
 goto :kontrol
 ) else (
@@ -209,8 +208,8 @@ set sagtakip=Folder Watch
 set sagtakipet=Watch the folder
 set sagtakipbirak=Remove the folder watch
 set yenieklemevar=New subtitle has added to your TV Series Folder!
-set eklendibaslik=Added Subtitles
-set he=Yes, Go to folder
+set eklendibaslik=Go to Folder?
+set he=Added subtitles;
 set yok=No, Close the window
 del %TEMP%\en.nn
 goto :kontrol
@@ -302,7 +301,7 @@ echo :farkli  >> kontrol.bat
 echo set dosya1="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> kontrol.bat
 echo set dosya2="C:\Progra~1\FileBot\OtoAltyazi\yeni.txt" >> kontrol.bat
 echo findstr /G:%%dosya1%% /I /L /B /V %%dosya2%% ^> C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt >> kontrol.bat
-echo wscript C:\Progra~1\FileBot\OtoAltyazi\eklendi.vbs >> kontrol.bat
+echo wscript //T:300 C:\Progra~1\FileBot\OtoAltyazi\eklendi.vbs >> kontrol.bat
 echo ATTRIB -R -S -H "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> kontrol.bat
 echo DEL /Q "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> kontrol.bat
 echo goto olustur >> kontrol.bat
@@ -323,7 +322,7 @@ echo. >> eklendi.vbs
 echo If objFile.Size ^> 0 Then >> eklendi.vbs
 echo Set objReadFile = objFSO.OpenTextFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt", 1, False)>> eklendi.vbs
 echo contents = objReadFile.ReadAll>> eklendi.vbs
-echo result = MsgBox ("" ^& contents ^& "%he% %yok%",vbYesNo+vbExclamation,"%eklendibaslik%")>> eklendi.vbs
+echo result = MsgBox ("%he%" ^& contents ^& "",vbYesNo+vbExclamation,"%eklendibaslik%")>> eklendi.vbs
 echo Select Case result>> eklendi.vbs
 echo Case vbYes>> eklendi.vbs
 echo Set shell = wscript.CreateObject("Shell.Application")>> eklendi.vbs
