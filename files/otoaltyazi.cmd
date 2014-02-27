@@ -330,7 +330,7 @@ echo. >> eklendi.vbs
 echo If objFile.Size ^> 0 Then >> eklendi.vbs
 echo Set objReadFile = objFSO.OpenTextFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt", 1, False)>> eklendi.vbs
 echo contents = objReadFile.ReadAll>> eklendi.vbs
-echo result = MsgBox ("%he%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation,"%eklendibaslik%")>> eklendi.vbs
+echo result = MsgBox ("%he%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation+vbSystemModal,"%eklendibaslik%")>> eklendi.vbs
 echo Select Case result>> eklendi.vbs
 echo Case vbYes>> eklendi.vbs
 echo Set shell = wscript.CreateObject("Shell.Application")>> eklendi.vbs

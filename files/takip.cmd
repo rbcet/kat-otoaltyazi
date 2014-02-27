@@ -50,7 +50,7 @@ echo. >> %1\eklendi.vbs
 echo If objFile.Size > 0 Then >> %1\eklendi.vbs
 echo Set objReadFile = objFSO.OpenTextFile("%1\eklendi.txt", 1, False)>> %1\eklendi.vbs
 echo contents = objReadFile.ReadAll>> %1\eklendi.vbs
-echo result = MsgBox ("%he% %yok%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation,"%eklendibaslik%")>> %1\eklendi.vbs
+echo result = MsgBox ("%he% %yok%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation+vbSystemModal,"%eklendibaslik%")>> %1\eklendi.vbs
 echo Select Case result>> %1\eklendi.vbs
 echo Case vbYes>>  %1\eklendi.vbs
 echo Set shell = wscript.CreateObject("Shell.Application")>> %1\eklendi.vbs
