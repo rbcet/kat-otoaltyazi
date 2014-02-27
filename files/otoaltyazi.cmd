@@ -279,8 +279,12 @@ goto start
 set /p pathName=%yoluyaz%:%=%
 set /p dakiKa=%kackontrol%:%=%
 set /p altdil=%hangidil%:%=%
+set yuzde=%%
 
 echo @echo off  >> kontrol.bat
+echo. >> kontrol.bat 
+echo ATTRIB -R -S -H "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt"   >> kontrol.bat
+echo CD.^>C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt   >> kontrol.bat
 echo. >> kontrol.bat
 echo echo. 2^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
 echo. >> kontrol.bat 
@@ -300,10 +304,14 @@ echo. >> kontrol.bat
 echo :farkli  >> kontrol.bat
 echo set dosya1="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> kontrol.bat
 echo set dosya2="C:\Progra~1\FileBot\OtoAltyazi\yeni.txt" >> kontrol.bat
-echo findstr /G:%%dosya1%% /I /L /B /V %%dosya2%% ^> C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt >> kontrol.bat
+echo. >> kontrol.bat 
+echo setlocal enabledelayedexpansion    >> kontrol.bat
+echo for /f "delims=" %yuzde%%yuzde%a in ('findstr /G:%%dosya1%% /I /L /B /V %%dosya2%%') do (@echo %yuzde%%yuzde%~nxa ^>^> C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt )  >> kontrol.bat
+echo endlocal  >> kontrol.bat
+echo. >> kontrol.bat 
 echo wscript //T:300 C:\Progra~1\FileBot\OtoAltyazi\eklendi.vbs >> kontrol.bat
 echo ATTRIB -R -S -H "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> kontrol.bat
-echo DEL /Q "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> kontrol.bat
+echo CD.^>C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt  >> kontrol.bat
 echo goto olustur >> kontrol.bat
 echo. >> kontrol.bat
 echo :olustur >> kontrol.bat
@@ -322,7 +330,7 @@ echo. >> eklendi.vbs
 echo If objFile.Size ^> 0 Then >> eklendi.vbs
 echo Set objReadFile = objFSO.OpenTextFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt", 1, False)>> eklendi.vbs
 echo contents = objReadFile.ReadAll>> eklendi.vbs
-echo result = MsgBox ("%he%" ^& contents ^& "",vbYesNo+vbExclamation,"%eklendibaslik%")>> eklendi.vbs
+echo result = MsgBox ("%he%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation,"%eklendibaslik%")>> eklendi.vbs
 echo Select Case result>> eklendi.vbs
 echo Case vbYes>> eklendi.vbs
 echo Set shell = wscript.CreateObject("Shell.Application")>> eklendi.vbs
