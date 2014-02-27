@@ -303,6 +303,8 @@ echo set dosya1="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> kontrol.bat
 echo set dosya2="C:\Progra~1\FileBot\OtoAltyazi\yeni.txt" >> kontrol.bat
 echo findstr /G:%%dosya1%% /I /L /B /V %%dosya2%% ^> C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt >> kontrol.bat
 echo wscript C:\Progra~1\FileBot\OtoAltyazi\eklendi.vbs >> kontrol.bat
+echo ATTRIB -R -S -H "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> kontrol.bat
+echo DEL /Q "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> kontrol.bat
 echo goto olustur >> kontrol.bat
 echo. >> kontrol.bat
 echo :olustur >> kontrol.bat
