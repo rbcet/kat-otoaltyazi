@@ -40,7 +40,10 @@ GOTO ERR1
 	set eklendibaslik=Klasore git? - Go to folder?
 ATTRIB -H %1\eski.txt 
 ATTRIB -H %1\yeni.txt
-	
+ATTRIB -R -S -H %1\eklendi.txt
+CD.>%1\eklendi.txt  
+ATTRIB +H %1\eklendi.txt
+
 echo Option Explicit>> %1\eklendi.vbs
 echo Const conForReading = ^1>> %1\eklendi.vbs
 echo Dim objFSO, objReadFile, objFile, contents, result, shell>> %1\eklendi.vbs
