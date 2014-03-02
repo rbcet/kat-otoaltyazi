@@ -46,7 +46,7 @@ ATTRIB +H %1\eklendi.txt
 
 echo Option Explicit>> %1\eklendi.vbs
 echo Const conForReading = ^1>> %1\eklendi.vbs
-echo Dim objFSO, objReadFile, objFile, contents, result, shell>> %1\eklendi.vbs
+echo Dim objFSO, objReadFile, objFile, contents, result, shell, WshShell, somestring, txFldr2Open>> %1\eklendi.vbs
 echo Set objFSO = CreateObject("Scripting.FileSystemObject")>> %1\eklendi.vbs
 echo Set objFile = objFSO.GetFile("%1\eklendi.txt") >> %1\eklendi.vbs
 echo. >> %1\eklendi.vbs
@@ -55,9 +55,12 @@ echo Set objReadFile = objFSO.OpenTextFile("%1\eklendi.txt", 1, False)>> %1\ekle
 echo contents = objReadFile.ReadAll>> %1\eklendi.vbs
 echo result = MsgBox ("%he% %yok%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation+vbSystemModal,"%eklendibaslik%")>> %1\eklendi.vbs
 echo Select Case result>> %1\eklendi.vbs
-echo Case vbYes>>  %1\eklendi.vbs
-echo Set shell = wscript.CreateObject("Shell.Application")>> %1\eklendi.vbs
-echo shell.Open "%1">> %1\eklendi.vbs
+echo Case vbYes>> %1\eklendi.vbs
+echo  Set WshShell = WScript.CreateObject("WScript.Shell")>> %1\eklendi.vbs
+echo txFldr2Open = "%1">> %1\eklendi.vbs
+echo somestring = "explorer.exe /e, /select," & txFldr2Open>> %1\eklendi.vbs
+echo WshShell.run somestring>> %1\eklendi.vbs
+echo Set WshShell = Nothing>> %1\eklendi.vbs
 echo Case vbNo>> %1\eklendi.vbs
 echo End Select>> %1\eklendi.vbs
 echo objReadFile.close>> %1\eklendi.vbs

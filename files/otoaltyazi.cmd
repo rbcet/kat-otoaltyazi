@@ -344,7 +344,7 @@ echo exit >> kontrol.bat
 
 echo Option Explicit>> eklendi.vbs
 echo Const conForReading = ^1>> eklendi.vbs
-echo Dim objFSO, objReadFile, objFile, contents, result, shell>> eklendi.vbs
+echo Dim objFSO, objReadFile, objFile, contents, result, shell, WshShell, somestring, txFldr2Open>> eklendi.vbs
 echo Set objFSO = CreateObject("Scripting.FileSystemObject")>> eklendi.vbs
 echo Set objFile = objFSO.GetFile("C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt") >> eklendi.vbs
 echo. >> eklendi.vbs
@@ -354,8 +354,11 @@ echo contents = objReadFile.ReadAll>> eklendi.vbs
 echo result = MsgBox ("%he%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation+vbSystemModal,"%eklendibaslik%")>> eklendi.vbs
 echo Select Case result>> eklendi.vbs
 echo Case vbYes>> eklendi.vbs
-echo Set shell = wscript.CreateObject("Shell.Application")>> eklendi.vbs
-echo shell.Open "%pathName%">> eklendi.vbs
+echo  Set WshShell = WScript.CreateObject("WScript.Shell")>> eklendi.vbs
+echo txFldr2Open = "%pathName%">> eklendi.vbs
+echo somestring = "explorer.exe /e, /select," & txFldr2Open>> eklendi.vbs
+echo WshShell.run somestring>> eklendi.vbs
+echo Set WshShell = Nothing>> eklendi.vbs
 echo Case vbNo>> eklendi.vbs
 echo End Select>> eklendi.vbs
 echo objReadFile.close>> eklendi.vbs
