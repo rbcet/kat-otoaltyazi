@@ -120,7 +120,7 @@ if '%choice%'=='en' echo english > %TEMP%\en.nn
 
 if exist "%TEMP%\tr.nn" (
 set ilksatir=KURMAK icin 1, CIKMAK icin 2 tuslayin, FILEBOT GUNCELLEMEK icin 3 tuslayin
-set yoluyaz=Dizilerinizin bulundugu ana klasoru yazin
+set yoluyaz=Dizilerinizin bulundugu ana klasoru secin
 set kackontrol=Kac dakikada bir kontrol edilecegini yazin
 set hangidil=Hangi dil altyazi indirilecegi tr en es it seklinde
 set infoilk=# FILEBOT DESTEKLI OTOMATIK ALTYAZI INDIRME SCRIPTI ########
@@ -167,7 +167,7 @@ del %TEMP%\tr.nn
 goto :kontrol
 ) else (
 set ilksatir=for INSTALL 1, for EXIT 2, for UPDATING FILEBOT press 3.
-set yoluyaz=Write the path of your TV Series
+set yoluyaz=Choose the folder of your TV Series
 set kackontrol=Interval time of checking missing subtitles(min)
 set hangidil=Which language would you like to have? (Answer Format en tr es it)
 set infoilk=# FULLY AUTOMATED SUBTITLE DOWNLOAD SCRIPT (via FILEBOT) ###
@@ -273,10 +273,30 @@ ECHO.
 goto start
 
 
+	:klasorsec
+    set pathName=
+    set vbs="%temp%\_.vbs"
+    set cmd="%temp%\_.cmd"
+    for %%f in (%vbs% %cmd%) do if exist %%f del %%f
+    for %%g in ("vbs cmd") do if defined %%g set %%g=
+    >%vbs% echo set WshShell=WScript.CreateObject("WScript.Shell") 
+    >>%vbs% echo set shell=WScript.CreateObject("Shell.Application") 
+    >>%vbs% echo set f=shell.BrowseForFolder(0,%1,0,%2) 
+    >>%vbs% echo if typename(f)="Nothing" Then  
+    >>%vbs% echo wscript.echo "exit" 
+    >>%vbs% echo WScript.Quit(1)
+    >>%vbs% echo end if 
+    >>%vbs% echo set fs=f.Items():set fi=fs.Item() 
+    >>%vbs% echo p=fi.Path:wscript.echo "set pathName=" ^& p
+    cscript //nologo %vbs% > %cmd%
+    for /f "delims=" %%a in (%cmd%) do %%a
+    for %%f in (%vbs% %cmd%) do if exist %%f del %%f
+    for %%g in ("vbs cmd") do if defined %%g set %%g=
+    goto :eof
 
+	
 :EVET
-
-set /p pathName=%yoluyaz%:%=%
+Call :klasorsec "%yoluyaz%" "C:\diziler\klasorunu\secin"
 set /p dakiKa=%kackontrol%:%=%
 set /p altdil=%hangidil%:%=%
 set yuzde=%%
@@ -465,6 +485,7 @@ ECHO %basariyla%
 
 goto end
 
+	
 :YOK
 echo (
 echo (
