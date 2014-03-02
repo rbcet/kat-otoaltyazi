@@ -330,7 +330,7 @@ echo for /f "delims=" %yuzde%%yuzde%a in ('findstr /G:%%dosya1%% /I /L /B /V %%d
 echo endlocal  >> kontrol.bat
 echo. >> kontrol.bat 
 echo start "" wscript "C:\Progra~1\FileBot\OtoAltyazi\eklendi.vbs" >> kontrol.bat
-echo ping 192.0.2.2 -n 1 -w 2500 ^> nul >> kontrol.bat
+echo ping 192.0.2.2 -n 1 -w 10000 ^> nul >> kontrol.bat
 echo ATTRIB -R -S -H "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> kontrol.bat
 echo CD.^>C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt  >> kontrol.bat
 echo goto olustur >> kontrol.bat
