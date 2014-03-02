@@ -477,6 +477,9 @@ If exist "%Temp%\~import.reg" (
 START /WAIT REGEDIT /S "%Temp%\~import.reg"
 DEL "%Temp%\~import.reg"
 
+DEL /Q "%tmp%\_.cmd"
+DEL /Q "%tmp%\_.vbs"
+
 wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs 
 
 bitsadmin.exe /transfer "Klasor_Takip_CMD" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip.cmd"
@@ -681,6 +684,8 @@ for /f "delims=" %%a in (%watchlist%) do schtasks /delete /tn "%%a" /f
 DEL /Q "%watchlist%"
 RD /S /Q "C:\Program Files\FileBot\OtoAltyazi\"
 RD /S /Q "C:\Program Files\FileBot\"
+
+DEL /Q "%tmp%\FileBot-setup.exe"
 
 
 ECHO ) %kaldirdik%

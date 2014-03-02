@@ -361,4 +361,5 @@ GOTO FINISH
 
 :FINISH
 :: %logfile%
+del "%tmp%\filebot_watch_script_log.txt"
 EXIT /B
