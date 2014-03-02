@@ -550,7 +550,7 @@ goto kurdumu
 	echo.
 
 	echo %jariniyor% %downloadURL%
-	bitsadmin.exe /transfer "FileBot_Guncelle" /priority foreground "http://ufpr.dl.sourceforge.net/project/filebot/filebot/HEAD/FileBot.jar" "%tmp%\FileBot.jar"
+	bitsadmin.exe /transfer "FileBot_Guncelle" /priority foreground "http://kent.dl.sourceforge.net/project/filebot/filebot/HEAD/FileBot.jar" "%tmp%\FileBot.jar"
 
 	if not errorlevel 0 GOTO end
 	
