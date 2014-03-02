@@ -50,7 +50,7 @@ echo Dim objFSO, objReadFile, objFile, contents, result, shell, WshShell, somest
 echo Set objFSO = CreateObject("Scripting.FileSystemObject")>> %1\eklendi.vbs
 echo Set objFile = objFSO.GetFile("%1\eklendi.txt") >> %1\eklendi.vbs
 echo. >> %1\eklendi.vbs
-echo If objFile.Size > 0 Then >> %1\eklendi.vbs
+echo If objFile.Size ^> 0 Then >> %1\eklendi.vbs
 echo Set objReadFile = objFSO.OpenTextFile("%1\eklendi.txt", 1, False)>> %1\eklendi.vbs
 echo contents = objReadFile.ReadAll>> %1\eklendi.vbs
 echo result = MsgBox ("%he% %yok%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation+vbSystemModal,"%eklendibaslik%")>> %1\eklendi.vbs
