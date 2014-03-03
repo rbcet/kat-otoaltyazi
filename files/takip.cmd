@@ -58,7 +58,7 @@ echo Select Case result>> %1\eklendi.vbs
 echo Case vbYes>> %1\eklendi.vbs
 echo  Set WshShell = WScript.CreateObject("WScript.Shell")>> %1\eklendi.vbs
 echo txFldr2Open = "%1">> %1\eklendi.vbs
-echo somestring = "explorer.exe /e, /select," ^& txFldr2Open>> %1\eklendi.vbs
+echo somestring = "explorer.exe /e," ^& txFldr2Open>> %1\eklendi.vbs
 echo WshShell.run somestring>> %1\eklendi.vbs
 echo Set WshShell = Nothing>> %1\eklendi.vbs
 echo Case vbNo>> %1\eklendi.vbs

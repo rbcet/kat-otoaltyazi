@@ -301,47 +301,6 @@ set /p dakiKa=%kackontrol%:%=%
 set /p altdil=%hangidil%:%=%
 set yuzde=%%
 
-echo @echo off  >> kontrol.bat
-echo. >> kontrol.bat 
-echo ATTRIB -R -S -H "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt"   >> kontrol.bat
-echo CD.^>C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt   >> kontrol.bat
-echo. >> kontrol.bat
-echo echo. 2^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt >> kontrol.bat
-echo. >> kontrol.bat 
-echo if exist "C:\Progra~1\FileBot\OtoAltyazi\eski.txt" (  >> kontrol.bat
-echo goto :karsilastir  >> kontrol.bat
-echo ) else (  >> kontrol.bat
-echo dir /b /s "%pathName%"  ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt  >> kontrol.bat
-echo goto cik  >> kontrol.bat
-echo )  >> kontrol.bat
-echo. >> kontrol.bat
-echo :karsilastir >> kontrol.bat
-echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt  >> kontrol.bat
-echo fc /b C:\Progra~1\FileBot\OtoAltyazi\eski.txt C:\Progra~1\FileBot\OtoAltyazi\yeni.txt^|find /i "no differences"^>nul >> kontrol.bat
-echo if errorlevel 1 goto farkli  >> kontrol.bat
-echo if not errorlevel 1 goto olustur >> kontrol.bat
-echo. >> kontrol.bat 
-echo :farkli  >> kontrol.bat
-echo set dosya1="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> kontrol.bat
-echo set dosya2="C:\Progra~1\FileBot\OtoAltyazi\yeni.txt" >> kontrol.bat
-echo. >> kontrol.bat 
-echo setlocal enabledelayedexpansion    >> kontrol.bat
-echo for /f "delims=" %yuzde%%yuzde%a in ('findstr /G:%%dosya1%% /I /L /B /V %%dosya2%%') do (@echo %yuzde%%yuzde%~nxa ^>^> C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt )  >> kontrol.bat
-echo endlocal  >> kontrol.bat
-echo. >> kontrol.bat 
-echo start "" wscript "C:\Progra~1\FileBot\OtoAltyazi\eklendi.vbs" >> kontrol.bat
-echo ping 192.0.2.2 -n 1 -w 4000 ^> nul >> kontrol.bat
-echo ATTRIB -R -S -H "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> kontrol.bat
-echo CD.^>C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt  >> kontrol.bat
-echo goto olustur >> kontrol.bat
-echo. >> kontrol.bat
-echo :olustur >> kontrol.bat
-echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> kontrol.bat
-echo goto cik  >> kontrol.bat
-echo. >> kontrol.bat
-echo :cik >> kontrol.bat
-echo exit >> kontrol.bat
-
 echo Option Explicit>> eklendi.vbs
 echo Const conForReading = ^1>> eklendi.vbs
 echo Dim objFSO, objReadFile, objFile, contents, result, shell, WshShell, somestring, txFldr2Open>> eklendi.vbs
@@ -373,16 +332,41 @@ echo WScript.Quit() >> eklendi.vbs
 echo. 2> takip_ayari.txt
 echo cmd /c filebot -script fn:suball \"PATH_HERE\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO >> takip_ayari.txt
 
-echo @echo off > sub.bat
-echo wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs >> sub.bat
-echo filebot -script fn:suball "%pathName%" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO >> sub.bat
-echo wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs >> sub.bat
+echo @echo off  > sub.bat
+echo CD.^>"%pathName%\empty.srt">> sub.bat
+echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt  >> sub.bat
+echo CD.^>C:\Progra~1\FileBot\OtoAltyazi\yeni.txt  >> sub.bat
+echo. >> sub.bat
+echo filebot -script fn:suball "%pathName%" -non-strict --lang tr --log-file context.log --encoding utf8 --format MATCH_VIDEO >> sub.bat
+echo. >> sub.bat
+echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\yeni.txt  >> sub.bat
+echo fc /b C:\Progra~1\FileBot\OtoAltyazi\eski.txt C:\Progra~1\FileBot\OtoAltyazi\yeni.txt^|find /i "no differences"^>nul >> sub.bat
+echo if errorlevel 1 goto farkli  >> sub.bat
+echo if not errorlevel 1 goto olustur >> sub.bat
+echo. >> sub.bat
+echo :farkli  >> sub.bat
+echo set dosya1="C:\Progra~1\FileBot\OtoAltyazi\eski.txt" >> sub.bat
+echo set dosya2="C:\Progra~1\FileBot\OtoAltyazi\yeni.txt" >> sub.bat
+echo. >> sub.bat
+echo for /f "delims=" %yuzde%%yuzde%a in ('findstr /G:%%dosya1%% /I /L /B /V %%dosya2%%') do (@echo %yuzde%%yuzde%~nxa ^>^> C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt)  >> sub.bat
+echo. >> sub.bat
+echo ping 192.0.2.2 -n 1 -w 4000 > nul >> sub.bat
+echo goto olustur >> sub.bat
+echo. >> sub.bat
+echo :olustur >> sub.bat
+echo start "" wscript "C:\Progra~1\FileBot\OtoAltyazi\eklendi.vbs" >> sub.bat
+echo ping 192.0.2.2 -n 1 -w 4000 ^> nul >> sub.bat
+echo dir /b /s "%pathName%" ^| findstr /m /i "\.srt$" ^> C:\Progra~1\FileBot\OtoAltyazi\eski.txt >> sub.bat
+echo goto cik  >> sub.bat
+echo. >> sub.bat
+echo :cik >> sub.bat
+echo ATTRIB -R -S -H "C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt" >> sub.bat
+echo CD.^>C:\Progra~1\FileBot\OtoAltyazi\eklendi.txt  >> sub.bat
+echo del "%pathName%\empty.srt">> sub.bat
+echo exit >> sub.bat
 
 echo Set objShell = CreateObject("Shell.Application") > sub.vbs
 echo objShell.ShellExecute "C:\Program Files\FileBot\OtoAltyazi\sub.bat", "", "", "runas", 0 >> sub.vbs
-
-echo Set objShell = CreateObject("Shell.Application") > kontrol.vbs
-echo objShell.ShellExecute "C:\Program Files\FileBot\OtoAltyazi\kontrol.bat", "", "", "runas", 0 >> kontrol.vbs
 
 echo Katates PIZARTMASI > Info.txt
 echo twitter.com/RBCetin - bit.ly/katatesp >> Info.txt
@@ -391,22 +375,13 @@ echo %infoscripti% >> Info.txt
 echo %subatayi% 2014 >> Info.txt
 
 mkdir "C:\Program Files\FileBot\OtoAltyazi"
-
-echo. 2> empty.srt
-copy empty.srt "%pathName%\"
-Attrib +H "%pathName%\empty.srt"
- 
-copy kontrol.bat "C:\Program Files\FileBot\OtoAltyazi"
 copy takip_ayari.txt "C:\Program Files\FileBot\OtoAltyazi"
-copy kontrol.vbs "C:\Program Files\FileBot\OtoAltyazi"
 copy sub.vbs "C:\Program Files\FileBot\OtoAltyazi"
 copy sub.bat "C:\Program Files\FileBot\OtoAltyazi"
 copy eklendi.vbs "C:\Program Files\FileBot\OtoAltyazi"
 copy info.txt "C:\Program Files\FileBot\OtoAltyazi"
 
 DEL eklendi.vbs
-DEL kontrol.vbs
-DEL kontrol.bat
 DEL takip_ayari.txt
 DEL sub.vbs
 DEL sub.bat
@@ -484,8 +459,6 @@ DEL "%Temp%\~import.reg"
 
 DEL /Q "%tmp%\_.cmd"
 DEL /Q "%tmp%\_.vbs"
-
-wscript C:\Progra~1\FileBot\OtoAltyazi\kontrol.vbs 
 
 bitsadmin.exe /transfer "Klasor_Takip_CMD" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip.cmd"
 bitsadmin.exe /transfer "Klasor_Takip_CMD2" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip_et.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
