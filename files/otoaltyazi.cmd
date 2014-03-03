@@ -354,9 +354,9 @@ echo contents = objReadFile.ReadAll>> eklendi.vbs
 echo result = MsgBox ("%he%" ^& vbCr ^& contents ^& "",vbYesNo+vbExclamation+vbSystemModal,"%eklendibaslik%")>> eklendi.vbs
 echo Select Case result>> eklendi.vbs
 echo Case vbYes>> eklendi.vbs
-echo  Set WshShell = WScript.CreateObject("WScript.Shell")>> eklendi.vbs
+echo Set WshShell = WScript.CreateObject("WScript.Shell")>> eklendi.vbs
 echo txFldr2Open = "%pathName%">> eklendi.vbs
-echo somestring = "explorer.exe /e, /select," ^& txFldr2Open>> eklendi.vbs
+echo somestring = "EXPLORER.EXE /e, /select," ^& txFldr2Open>> eklendi.vbs
 echo WshShell.run somestring>> eklendi.vbs
 echo Set WshShell = Nothing>> eklendi.vbs
 echo Case vbNo>> eklendi.vbs
@@ -550,7 +550,7 @@ goto kurdumu
 	echo.
 
 	echo %jariniyor% %downloadURL%
-	bitsadmin.exe /transfer "FileBot_Guncelle" /priority foreground "http://kent.dl.sourceforge.net/project/filebot/filebot/HEAD/FileBot.jar" "%tmp%\FileBot.jar"
+	bitsadmin.exe /transfer "FileBot_Guncelle" /priority foreground "http://sourceforge.net/projects/filebot/files/filebot/HEAD/FileBot.jar" "%tmp%\FileBot.jar"
 
 	if not errorlevel 0 GOTO end
 	
