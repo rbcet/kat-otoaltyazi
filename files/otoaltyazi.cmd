@@ -391,6 +391,11 @@ echo %infoscripti% >> Info.txt
 echo %subatayi% 2014 >> Info.txt
 
 mkdir "C:\Program Files\FileBot\OtoAltyazi"
+
+echo. 2> empty.srt
+copy empty.srt "%pathName%\"
+Attrib +H "%pathName%\empty.srt"
+ 
 copy kontrol.bat "C:\Program Files\FileBot\OtoAltyazi"
 copy takip_ayari.txt "C:\Program Files\FileBot\OtoAltyazi"
 copy kontrol.vbs "C:\Program Files\FileBot\OtoAltyazi"
