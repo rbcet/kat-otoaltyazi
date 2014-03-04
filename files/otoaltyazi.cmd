@@ -296,10 +296,19 @@ goto start
 
 	
 :EVET
+
+
+if exist "C:\windows\syswow64\wscript.exe" (
+set taskyol="C:\windows\syswow64\wscript.exe"
+) else (
+set taskyol="C:\windows\system32\wscript.exe"
+)
+
 Call :klasorsec "%yoluyaz%" "C:\diziler\klasorunu\secin"
 set /p dakiKa=%kackontrol%:%=%
 set /p altdil=%hangidil%:%=%
 set yuzde=%%
+
 
 echo Option Explicit>> eklendi.vbs
 echo Const conForReading = ^1>> eklendi.vbs
@@ -387,7 +396,7 @@ DEL sub.vbs
 DEL sub.bat
 DEL info.txt
 
-schtasks /create /sc minute /mo %dakiKa% /tn "ALTYAZI" /tr "%%ProgramW6432%%\FileBot\OtoAltyazi\sub.vbs"
+schtasks /create /sc minute /mo %dakiKa% /tn "ALTYAZI" /tr "%taskyol% \"%%ProgramW6432%%\FileBot\OtoAltyazi\sub.vbs\""
 
 If exist "%Temp%\~import.reg" (
  Attrib -R -S -H "%Temp%\~import.reg"

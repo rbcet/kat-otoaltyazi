@@ -114,7 +114,6 @@ GOTO SETUP
 
 :SETUP
 
-	set logfile="%tmp%\filebot_watch_script_log.txt"
 	:: set watchsettings="C:\Program Files\FileBot\OtoAltyazi\takip_ayari.txt"
 	set watchfile="C:\Progra~1\FileBot\OtoAltyazi\takip.cmd"
 	set "watchlist=C:\Progra~1\FileBot\OtoAltyazi\gorev_listesi.txt"
@@ -225,14 +224,14 @@ GOTO ERR1
 			) ELSE (
 				goto metric-default
 			)
-			echo New Scheduling Metric: %scanmetric% >> %logfile%
+			echo New Scheduling Metric: %scanmetric% 
 		GOTO ask-units
 
 		:metric-default	
 			set "scanmetric=daily"
 			set "metricterm=days"
 			set "termlimits=Limit: 1 - 365 %metricterm%"
-			echo No Valid Scheduling Metric Detected. Defaulting to %scanmetric% >> %logfile%
+			echo No Valid Scheduling Metric Detected. Defaulting to %scanmetric% 
 		GOTO ask-units
 
 	:ask-units
@@ -290,13 +289,13 @@ GOTO ERR1
 				)
 			)
 
-			echo Number of %metricterm%: %scanunits% >> %logfile%
+			echo Number of %metricterm%: %scanunits% 
 
 		GOTO CreateTask
 
 		:units-default
 			set "scanunits=1"
-			echo No Valid Metric Detected. Defaulting to %scanunits% >> %logfile%
+			echo No Valid Metric Detected. Defaulting to %scanunits% 
 		GOTO CreateTask
 
 	if not errorlevel 0 GOTO ERR1
@@ -305,9 +304,9 @@ GOTO CreateTask
 
 
 :CreateTask
-
-	ECHO Creating Folder Watch Task for %var1% >> %logfile%
-	schtasks /create /sc %scanmetric% /mo %scanunits% /tn "Takip %var3%" /tr "%%ProgramW6432%%\FileBot\OtoAltyazi\takip.vbs \"%1\" \"%2\"" /F >> %logfile%
+@echo off
+	ECHO Creating Folder Watch Task for %var1% 
+	schtasks /create /sc %scanmetric% /mo %scanunits% /tn "Takip %var3%" /tr "%%ProgramW6432%%\FileBot\OtoAltyazi\takip.vbs \"%1\" \"%2\"" /F
 	echo Takip %var3%>> "%watchlist%"
 	
 	if not errorlevel 0 GOTO ERR1
@@ -316,10 +315,10 @@ GOTO CreateTask
 
 
 :RemoveTask
-
-	ECHO Deleting Folder Watch for %var1% >> %logfile%
+	@echo off
+	ECHO Deleting Folder Watch for %var1% 
 	:: remove task for this folder
-	schtasks /delete /TN "Takip %var3%" /f >> %logfile%
+	schtasks /delete /TN "Takip %var3%" /f 
 	findstr /v /i "%var3%" "%watchlist%" > "%watchlist2%"
 	type "%watchlist2%" > "%watchlist%"
 	del "%watchlist2%"
@@ -327,7 +326,7 @@ GOTO CreateTask
 	DEL /Q /a:H "%var1%\yeni.txt"
 	DEL /Q /a:H "%var1%\eklendi.txt"
 
-	ECHO Task Deleted >> %logfile%
+	ECHO Task Deleted 
 
 	if not errorlevel 0 GOTO ERR1
 
@@ -346,20 +345,18 @@ exit /b
 
 
 :ERR1
-	echo **** Warning: Something Didn't Work. Please Confirm Settings **** >> %logfile%
-	echo. >> %logfile%
+	echo **** Warning: Something Didn't Work. Please Confirm Settings **** 
+	echo. 
 	echo Press any key to terminate install ...
 	pause>nul
 GOTO FINISH
 
 
 :ALLOK
-	echo ****** Job completed successfully ***** >> %logfile%
-	echo. >> %logfile%
+	echo ****** Job completed successfully ***** 
+	echo. 
 GOTO FINISH
 
 
 :FINISH
-:: %logfile%
-del "%tmp%\filebot_watch_script_log.txt"
 EXIT /B
