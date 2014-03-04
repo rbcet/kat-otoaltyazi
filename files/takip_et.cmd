@@ -305,7 +305,7 @@ GOTO CreateTask
 
 :CreateTask
 @echo off
-	ECHO Creating Folder Watch Task for %var1% 
+	ECHO Yandaki icin klasor takibi olusturuluyor %var1% 
 	schtasks /create /sc %scanmetric% /mo %scanunits% /tn "Takip %var3%" /tr "%%ProgramW6432%%\FileBot\OtoAltyazi\takip.vbs \"%1\" \"%2\"" /F
 	echo Takip %var3%>> "%watchlist%"
 	
@@ -316,7 +316,7 @@ GOTO CreateTask
 
 :RemoveTask
 	@echo off
-	ECHO Deleting Folder Watch for %var1% 
+	ECHO Yandaki icin klasor takibi kaldiriliyor %var1% 
 	:: remove task for this folder
 	schtasks /delete /TN "Takip %var3%" /f 
 	findstr /v /i "%var3%" "%watchlist%" > "%watchlist2%"
@@ -326,7 +326,7 @@ GOTO CreateTask
 	DEL /Q /a:H "%var1%\yeni.txt"
 	DEL /Q /a:H "%var1%\eklendi.txt"
 
-	ECHO Task Deleted 
+	ECHO Takip kaldirildi
 
 	if not errorlevel 0 GOTO ERR1
 
@@ -345,15 +345,15 @@ exit /b
 
 
 :ERR1
-	echo **** Warning: Something Didn't Work. Please Confirm Settings **** 
+	echo **** Hata **** 
 	echo. 
-	echo Press any key to terminate install ...
+	echo Iptal etmek icin bir tusa basin ...
 	pause>nul
 GOTO FINISH
 
 
 :ALLOK
-	echo ****** Job completed successfully ***** 
+	echo ****** Basariyla tamamlandi ***** 
 	echo. 
 GOTO FINISH
 
