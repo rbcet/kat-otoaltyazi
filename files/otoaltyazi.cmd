@@ -413,7 +413,7 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell]
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell\%sagindir%]
->> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell\%sagindir%\Command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c  filebot.launcher -get-subtitles \"%%1\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO"
@@ -423,7 +423,7 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell]
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell\%sagindir%]
->> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell\%sagindir%\Command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c  filebot.launcher -get-subtitles \"%%1\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO"
@@ -433,13 +433,13 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell]
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\%sagindir%]
->> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\%sagindir%\Command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c  filebot.launcher -get-subtitles \"%%1\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO"
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\01Altyazýlarý indir]
->> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagindirler%"
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\01Altyazýlarý indir\command]
@@ -448,7 +448,7 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\02Takip]
 >> "%Temp%\~import.reg" ECHO "ExtendedSubCommandsKey"="Folder\\\\shell\\\\02Takip"
 >> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagtakip%"
->> "%Temp%\~import.reg" ECHO "icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell]
 >> "%Temp%\~import.reg" ECHO.
@@ -472,6 +472,7 @@ DEL /Q "%tmp%\_.vbs"
 bitsadmin.exe /transfer "Klasor_Takip_CMD" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip.cmd"
 bitsadmin.exe /transfer "Klasor_Takip_CMD2" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip_et.cmd" "C:\Program Files\FileBot\OtoAltyazi\takip_et.cmd"
 bitsadmin.exe /transfer "Klasor_Takip_VBS" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.vbs" "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
+bitsadmin.exe /transfer "Icon" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/right.ico" "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
 
 
 ECHO %basariyla%
@@ -607,7 +608,7 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell]
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell\%sagindir%]
->> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell\%sagindir%\Command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c  filebot.launcher -get-subtitles \"%%1\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO"
@@ -617,7 +618,7 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell]
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell\%sagindir%]
->> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell\%sagindir%\Command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c  filebot.launcher -get-subtitles \"%%1\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO"
@@ -627,13 +628,13 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell]
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\%sagindir%]
->> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\%sagindir%\Command]
 >> "%Temp%\~import.reg" ECHO @="cmd /q /c  filebot.launcher -get-subtitles \"%%1\" -non-strict --lang %altdil% --log-file context.log --encoding utf8 --format MATCH_VIDEO"
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\01Altyazýlarý indir]
->> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagindirler%"
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\01Altyazýlarý indir\command]
@@ -642,7 +643,7 @@ If exist "%Temp%\~import.reg" (
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\02Takip]
 >> "%Temp%\~import.reg" ECHO "ExtendedSubCommandsKey"="Folder\\\\shell\\\\02Takip"
 >> "%Temp%\~import.reg" ECHO "MUIVerb"="%sagtakip%"
->> "%Temp%\~import.reg" ECHO "icon"="\"C:\\Program Files\\FileBot\\filebot.exe\""
+>> "%Temp%\~import.reg" ECHO "icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right.ico\""
 >> "%Temp%\~import.reg" ECHO.
 >> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\Folder\shell\02Takip\shell]
 >> "%Temp%\~import.reg" ECHO.
