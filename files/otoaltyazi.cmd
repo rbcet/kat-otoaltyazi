@@ -474,6 +474,12 @@ bitsadmin.exe /transfer "Klasor_Takip_CMD2" /priority foreground  "https://githu
 bitsadmin.exe /transfer "Klasor_Takip_VBS" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.vbs" "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
 bitsadmin.exe /transfer "Icon" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/right.ico" "C:\Program Files\FileBot\OtoAltyazi\right.ico"
 
+if exist "C:\windows\syswow64\wscript.exe" (
+C:\windows\syswow64\wscript.exe "%ProgramW6432%\FileBot\OtoAltyazi\sub.vbs"
+) else (
+C:\windows\system32\wscript.exe "%ProgramW6432%\FileBot\OtoAltyazi\sub.vbs"
+)
+
 
 ECHO %basariyla%
 
