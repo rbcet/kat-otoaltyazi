@@ -163,6 +163,8 @@ set sagtakipbirak=Klasörün takibini býrak
 set yenieklemevar=Diziler klasorunuze yeni bir altyazi eklendi!
 set eklendibaslik=Klasöre git?
 set he=Eklenen altyazýlar;
+set IZLENDI=IZLENDI
+set ISARETLE=Ýzlendi olarak iþaretle
 del %TEMP%\tr.nn
 goto :kontrol
 ) else (
@@ -211,6 +213,8 @@ set yenieklemevar=New subtitle has added to your TV Series Folder!
 set eklendibaslik=Go to Folder?
 set he=Added subtitles;
 set yok=No, Close the window
+set IZLENDI=WATCHED
+set ISARETLE=Mark as watched
 del %TEMP%\en.nn
 goto :kontrol
 )
@@ -220,21 +224,21 @@ goto :kontrol
 if exist "C:\Program Files\FileBot\filebot.jar" (
 goto :kontrol2
 ) else (
-goto :YOK
+goto :BULAMADI
 )
 
 :kontrol2
 if exist "C:\Program Files\FileBot\filebot.platform.launcher.exe" (
 goto :kontrol3
 ) else (
-goto :YOK
+goto :BULAMADI
 )
 
 :kontrol3
 if exist "C:\Program Files\FileBot\filebot.launcher.exe" (
 goto :kontrol4
 ) else (
-goto :YOK
+goto :BULAMADI
 )
 
 :kontrol4
@@ -297,18 +301,20 @@ goto start
 	
 :EVET
 
-
 if exist "C:\windows\syswow64\wscript.exe" (
 set taskyol="C:\windows\syswow64\wscript.exe"
+copy /y C:\Windows\SysWOW64\cmd.exe C:\Windows\SysWOW64\cmd1.exe
+copy /y C:\Windows\System32\cmd.exe C:\Windows\System32\cmd1.exe
 ) else (
 set taskyol="C:\windows\system32\wscript.exe"
+copy /y C:\Windows\System32\cmd.exe C:\Windows\System32\cmd1.exe
 )
 
 Call :klasorsec "%yoluyaz%" "C:\diziler\klasorunu\secin"
 set /p dakiKa=%kackontrol%:%=%
 set /p altdil=%hangidil%:%=%
 set yuzde=%%
-
+set vese=&
 
 echo Option Explicit>> eklendi.vbs
 echo Const conForReading = ^1>> eklendi.vbs
@@ -474,6 +480,74 @@ bitsadmin.exe /transfer "Klasor_Takip_CMD2" /priority foreground  "https://githu
 bitsadmin.exe /transfer "Klasor_Takip_VBS" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/takip.vbs" "C:\Program Files\FileBot\OtoAltyazi\takip.vbs"
 bitsadmin.exe /transfer "Icon" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/right.ico" "C:\Program Files\FileBot\OtoAltyazi\right.ico"
 
+net user /add %IZLENDI% %IZLENDI%
+new localgroup administrators %IZLENDI% /add
+
+bitsadmin.exe /transfer "Icon2" /priority foreground  "https://github.com/katates/otoaltyazi/raw/master/files/right2.ico" "C:\Program Files\FileBot\OtoAltyazi\right2.ico"
+
+for /F "tokens=2 delims=," %%f in ('whoami /user /FO CSV /NH') do set kullanici=%%f
+call :dequote %kullanici%
+
+:dequote
+setlocal
+set thestring=%~1
+endlocal&set hesapadi=%thestring%
+
+
+If exist "%Temp%\~import.reg" (
+ Attrib -R -S -H "%Temp%\~import.reg"
+ del /F /Q "%Temp%\~import.reg"
+ If exist "%Temp%\~import.reg" (
+  Echo Could not delete file "%Temp%\~import.reg"
+  Pause
+ )
+)
+ECHO Windows Registry Editor Version 5.00 > "%Temp%\~import.reg"
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList] >> "%Temp%\~import.reg" 
+ECHO "%IZLENDI%"=dword:00000000 >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell\runas] >> "%Temp%\~import.reg" 
+ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\"" >> "%Temp%\~import.reg" 
+ECHO "MUIVerb"="%ISARETLE%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell\runas\command] >> "%Temp%\~import.reg" 
+ECHO @="cmd.exe /c takeown /f \"%yuzde%1\" && icacls \"%yuzde%1\" /setowner %IZLENDI%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\Shell\runas] >> "%Temp%\~import.reg" 
+ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\"" >> "%Temp%\~import.reg" 
+ECHO "MUIVerb"="%ISARETLE%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\Shell\runas\command] >> "%Temp%\~import.reg" 
+ECHO @="cmd.exe /c takeown /f \"%yuzde%1\" && icacls \"%yuzde%1\" /setowner %IZLENDI%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell\runas] >> "%Temp%\~import.reg" 
+ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\"" >> "%Temp%\~import.reg" 
+ECHO "MUIVerb"="%ISARETLE%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell\runas\command] >> "%Temp%\~import.reg" 
+ECHO @="cmd.exe /c takeown /f \"%yuzde%1\" && icacls \"%yuzde%1\" /setowner %IZLENDI%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\runas] >> "%Temp%\~import.reg" 
+ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\"" >> "%Temp%\~import.reg" 
+ECHO "MUIVerb"="%ISARETLE%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\runas\command] >> "%Temp%\~import.reg" 
+ECHO @="cmd.exe /c takeown /f \"%yuzde%1\" && icacls \"%yuzde%1\" /setowner %IZLENDI%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shell\runas2] >> "%Temp%\~import.reg" 
+ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\"" >> "%Temp%\~import.reg" 
+ECHO "MUIVerb"="%ISARETLE%" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shell\runas2\command] >> "%Temp%\~import.reg" 
+ECHO @="cmd1.exe /c takeown /f \"%yuzde%1\" /r /d y && icacls \"%yuzde%1\" /setowner %IZLENDI% /t" >> "%Temp%\~import.reg" 
+ECHO. >> "%Temp%\~import.reg" 
+ECHO [HKEY_USERS\%hesapadi%\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers] >> "%Temp%\~import.reg"
+ECHO "C:\\Windows\\System32\\cmd1.exe"="~ RUNASADMIN" >> "%Temp%\~import.reg" 
+ECHO "C:\\Windows\\SysWOW64\\cmd1.exe"="~ RUNASADMIN" >> "%Temp%\~import.reg" 
+START /WAIT REGEDIT /S "%Temp%\~import.reg"
+DEL "%Temp%\~import.reg"
+
 if exist "C:\windows\syswow64\wscript.exe" (
 C:\windows\syswow64\wscript.exe "%ProgramW6432%\FileBot\OtoAltyazi\sub.vbs"
 ) else (
@@ -486,7 +560,7 @@ ECHO %basariyla%
 goto end
 
 	
-:YOK
+:BULAMADI
 echo (
 echo (
 echo ############################################################
@@ -511,7 +585,7 @@ if '%choice%'=='1' goto INDIR
 if '%choice%'=='2' goto exit
 if '%choice%'=='uninstall' goto KALDIR
 ECHO.
-goto YOK
+goto BULAMADI
 
 :INDIR
 ECHO )
@@ -597,6 +671,8 @@ goto YOK2
 
 :KALDIR
 ECHO ) %kaldiriyo%
+set yuzde=%%
+set vese=&
 
 @ECHO OFF
 If exist "%Temp%\~import.reg" (
@@ -667,19 +743,93 @@ If exist "%Temp%\~import.reg" (
 START /WAIT REGEDIT /S "%Temp%\~import.reg"
 DEL "%Temp%\~import.reg"
 
+echo y | wmic product where name="FileBot" call uninstall
+
 
 SCHTASKS /Delete /TN "ALTYAZI" /f
-
-echo y | wmic product where name="FileBot" call uninstall
 
 set "watchlist=C:\Progra~1\FileBot\OtoAltyazi\gorev_listesi.txt"
 for /f "delims=" %%a in (%watchlist%) do schtasks /delete /tn "%%a" /f 
 
+
+if exist "C:\Progra~1\FileBot\OtoAltyazi\gorev_listesi.txt" (
 DEL /Q "%watchlist%"
+) else (
+echo gorev_listesi.txt bulunamadi.
+)
+
 RD /S /Q "C:\Program Files\FileBot\OtoAltyazi\"
 RD /S /Q "C:\Program Files\FileBot\"
 
+DEL /Q "C:\Windows\SysWOW64\cmd1.exe"
+DEL /Q "C:\Windows\System32\cmd1.exe"
+
 DEL /Q "%tmp%\FileBot-setup.exe"
+
+net user %IZLENDI% /del
+
+for /F "tokens=2 delims=," %%f in ('whoami /user /FO CSV /NH') do set kullanici=%%f
+call :dequote %kullanici%
+
+:dequote
+setlocal
+set thestring=%~1
+endlocal&set hesapadi=%thestring%
+
+If exist "%Temp%\~import.reg" (
+ Attrib -R -S -H "%Temp%\~import.reg"
+ del /F /Q "%Temp%\~import.reg"
+ If exist "%Temp%\~import.reg", (
+  Echo Could not delete file "%Temp%\~import.reg"
+  Pause
+ )
+)
+> "%Temp%\~import.reg" ECHO Windows Registry Editor Version 5.00
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList]
+>> "%Temp%\~import.reg" ECHO "%IZLENDI%"=-
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell\runas]
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\""
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%ISARETLE%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\Shell\runas\command]
+>> "%Temp%\~import.reg" ECHO @="cmd.exe /c takeown /f \"%yuzde%1\" && icacls \"%yuzde%1\" /setowner %IZLENDI%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\Shell\runas]
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\""
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%ISARETLE%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.srt\Shell\runas\command]
+>> "%Temp%\~import.reg" ECHO @="cmd.exe /c takeown /f \"%yuzde%1\" && icacls \"%yuzde%1\" /setowner %IZLENDI%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell\runas]
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\""
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%ISARETLE%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\Shell\runas\command]
+>> "%Temp%\~import.reg" ECHO @="cmd.exe /c takeown /f \"%yuzde%1\" && icacls \"%yuzde%1\" /setowner %IZLENDI%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\runas]
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\""
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%ISARETLE%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\Shell\runas\command]
+>> "%Temp%\~import.reg" ECHO @="cmd.exe /c takeown /f \"%yuzde%1\" && icacls \"%yuzde%1\" /setowner %IZLENDI%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shell\runas2]
+>> "%Temp%\~import.reg" ECHO "Icon"="\"C:\\Program Files\\FileBot\\OtoAltyazi\\right2.ico\""
+>> "%Temp%\~import.reg" ECHO "MUIVerb"="%ISARETLE%"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shell\runas2\command]
+>> "%Temp%\~import.reg" ECHO @="cmd1.exe /c takeown /f \"%yuzde%1\" /r /d y && icacls \"%yuzde%1\" /setowner %IZLENDI% /t"
+>> "%Temp%\~import.reg" ECHO.
+>> "%Temp%\~import.reg" ECHO [HKEY_USERS\%hesapadi%\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers]
+ECHO "C:\\Windows\\System32\\cmd1.exe"=- >> "%Temp%\~import.reg" 
+ECHO "C:\\Windows\\SysWOW64\\cmd1.exe"=- >> "%Temp%\~import.reg" 
+START /WAIT REGEDIT /S "%Temp%\~import.reg"
+DEL "%Temp%\~import.reg"
 
 
 ECHO ) %kaldirdik%
